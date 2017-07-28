@@ -7,5 +7,10 @@
 </ion-header>
 
 <ion-content padding>
-
+  <p [innerHTML]= "test"></p>
+  <div *ngFor="let post of posts">
+    <p>{{post.title.rendered}}</p>
+    <p>{{post.id}}</p>
+    <p>{{post.excerpt.rendered}}</p>
+  </div>
 </ion-content>

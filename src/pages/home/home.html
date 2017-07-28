@@ -1,17 +1,62 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <!--<ion-buttons start>
+      <button ion-button icon-only (click)="refreshPosts()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>-->
+    <ion-title>
+      Groundsounds Feed
+    </ion-title>
   </ion-navbar>
+
+  <!--<ion-searchbar placeholder="Search Post" debounce=500 (ionInput)="getFilteredItems($event)">
+  SHOULD BE IN THE BRACKETS [(ngModel)]="myInput"
+  [showCancelButton]="shouldShowCancel"
+  (ionInput)="onInput($event)"
+  (ionCancel)="onCancel($event)">
+  </ion-searchbar>-->
+
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content  class="cards-bg">
+
+  <ion-refresher [pullMax]="140" (ionRefresh)="refreshPosts($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="busyList" class="spinner-container">
+      <ion-spinner></ion-spinner>
+  </div>
+  <ion-list>
+    <ion-item padding-vertical *ngFor="let post of posts" (click)="itemTapped($event, post)">
+      <ion-thumbnail item-start>
+      <img src="assets/icon/icon.png">
+      </ion-thumbnail>
+      <h2 text-wrap [innerHTML]="post.title.rendered"></h2>
+      <!--<p text-nowrap [innerHTML]="post.excerpt.rendered"></p>-->
+    </ion-item>
+  </ion-list>
+    <!--<ion-row no-padding>
+      <ion-col>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='star'></ion-icon>
+          Favorite
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='musical-notes'></ion-icon>
+          Listen
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='share-alt'></ion-icon>
+          Share
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>-->
+
 </ion-content>
