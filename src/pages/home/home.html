@@ -19,7 +19,7 @@
 
 </ion-header>
 
-<ion-content  class="cards-bg">
+<ion-content>
 
   <ion-refresher [pullMax]="140" (ionRefresh)="refreshPosts($event)">
     <ion-refresher-content
@@ -34,8 +34,8 @@
       <ion-spinner></ion-spinner>
   </div>
   <ion-list>
-    <ion-item padding-vertical *ngFor="let post of posts" (click)="itemTapped($event, post)">
-      <ion-thumbnail item-start>
+    <ion-item  *ngFor="let post of posts" (click)="itemTapped($event, post)">
+      <ion-thumbnail item-start class="custom-thumbnail">
         <div class="crop-div">
           <img src="http://www.groundsounds.com/wp-content/uploads/2017/07/unnamed-6-3.jpg" class="customized-image">
         </div>

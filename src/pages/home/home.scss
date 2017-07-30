@@ -5,24 +5,33 @@ page-home {
         padding: 25px;
     }
 
-    .crop-div{
-        position: relative;
-        height: 56px;
-        width: 56px;
+    .custom-thumbnail{
+        height: 92px;
+        width: 92px
+    }
+
+    .crop-div{ // will crop contained img
+        position: absolute;
+        height: 92px;
+        width: 92px;
         overflow: hidden;
     }
 
-    .customized-image{
-        position: absolute;
-        left: 50%; // align left edge at 50% of width of container
-        -webkit-transform: translate(-50%,0%); // translate left by 50% of the img width
-        -ms-transform: translate(-50%,0%);
-        transform: translate(-50%,0%);
-        height: 100%; // keep height, expected landscape format of image
-        width: auto !important; // keep original width, no deformation
+    .customized-image{ //styled for keeping aspect ratio and get a centered img in the div
+        position: absolute; //positioned in reference to crop-div
+        left: 50%; // align left edge in middle of container;
+        -webkit-transform: translate(-50%, 0%); // translate left by 50% of the img width and height
+        -ms-transform: translate(-50%, 0%);
+        transform: translate(-50%, 0%);
+        height: 100% !important; // scale to fill crop-div height
+        width: auto !important; // keep original height-width ratio, no deformation, expected landscape format of image
         max-width: 1000% !important; // uncap max width set by default by ionic 2
         margin: auto; // may be not needed
         overflow: hidden;
+    }
+
+    .input-wrapper{
+        padding: 10px 0px !important;
     }
 
 }
