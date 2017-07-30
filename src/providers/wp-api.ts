@@ -18,6 +18,7 @@ import { SecurityContext } from '@angular/core';
 export class WpApiService {
 
   private urlPosts: string = 'http://www.groundsounds.com/wp-json/wp/v2/posts'; //?per_page=50
+  private postsPerPage: number = 25;
   //public posts: any;
   //public rawPosts: any;
 
@@ -44,18 +45,15 @@ export class WpApiService {
     });
   }*/
 
-  getPosts(){
-    /*if (this.posts) {
-      // already loaded data
-      return Promise.resolve(this.posts);
-    }*/
+  getPosts(page: number){
+
     //this.posts = null;
 
-      // don't have the data yet
-    return this.http.get(this.urlPosts).retry(5) // with retry 5 times
-        //.map(res => <Post[]>res.json()) // cast to array of post objects
-        .map(res => {return res.json()}); // cast to array oef post objcts
-
+    let url = this.urlPosts + "?page=" + String(page) + "&per_page="+ String(this.postsPerPage) +"&" + String(Date.now()); // url with page number and ajax timestamp to avoid caching
+    
+    let posts = this.http.get( url )
+                         .map(res => res.json()); // return observable cast to array of objects
+    return posts;
 
   }
 

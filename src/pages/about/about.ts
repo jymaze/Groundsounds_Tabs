@@ -28,7 +28,7 @@ export class AboutPage {
 
   getPosts(){
     this.busyList = true;
-    this.wp.getPosts().subscribe(data => { this.busyList = false; this.posts = data;} );
+    this.wp.getPosts(1).subscribe(data => { this.busyList = false; this.posts = data;} );
     //this.test="done";
   }
 

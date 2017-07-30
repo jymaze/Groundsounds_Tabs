@@ -1,12 +1,12 @@
 <ion-header>
-  <ion-navbar>
-    <!--<ion-buttons start>
-      <button ion-button icon-only (click)="refreshPosts()">
+  <ion-navbar padding>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="backToTop()">
         <ion-icon name="refresh"></ion-icon>
       </button>
-    </ion-buttons>-->
+    </ion-buttons>
     <ion-title>
-      Groundsounds Feed
+      <img src="assets/img/GS-logo.png">
     </ion-title>
   </ion-navbar>
 
@@ -22,7 +22,12 @@
 <ion-content  class="cards-bg">
 
   <ion-refresher [pullMax]="140" (ionRefresh)="refreshPosts($event)">
-    <ion-refresher-content></ion-refresher-content>
+    <ion-refresher-content
+      pullingText = "Pull to refresh"
+      pulling Icon = "arrow-dropdown"
+      refreshingSpinner = "circles"
+      refreshingText = "Refreshing...">
+    </ion-refresher-content>
   </ion-refresher>
 
   <div *ngIf="busyList" class="spinner-container">
@@ -31,7 +36,9 @@
   <ion-list>
     <ion-item padding-vertical *ngFor="let post of posts" (click)="itemTapped($event, post)">
       <ion-thumbnail item-start>
-      <img src="assets/icon/icon.png">
+        <div class="crop-div">
+          <img src="http://www.groundsounds.com/wp-content/uploads/2017/07/unnamed-6-3.jpg" class="customized-image">
+        </div>
       </ion-thumbnail>
       <h2 text-wrap [innerHTML]="post.title.rendered"></h2>
       <!--<p text-nowrap [innerHTML]="post.excerpt.rendered"></p>-->

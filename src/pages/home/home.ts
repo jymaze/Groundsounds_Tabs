@@ -14,20 +14,39 @@ export class HomePage {
 
   public busyList: boolean = false;
   public posts: any = null;
+  public page: number = 1;
 
   constructor(public navCtrl: NavController, private wp: WpApiService) {
+
+  }
+
+  ionViewDidLoad(){
+    console.log('page will enter')
     this.getPosts();
   }
 
   getPosts(){
     this.busyList = true;
-    this.wp.getPosts().subscribe(data => { this.busyList = false; this.posts = data; });
+    console.log('getting page ' + this.page)
+    this.wp.getPosts(this.page).subscribe(data => { this.busyList = false; this.posts = data; },
+                                           err => console.error(err),
+                                           () => console.log('getPosts completed')
+                                );
   }
 
   refreshPosts(refresher){
-    this.posts = null;
-    this.wp.getPosts().subscribe(data => { this.posts = data; });
-    refresher.complete();
+    this.page += 1;
+    //this.posts = null;
+    console.log('getting page ' + this.page)
+    this.wp.getPosts(this.page).subscribe(data => { this.posts = data; },
+                                           err => {console.error(err)},
+                                           () => {console.log('refreshPosts completed'); refresher.complete();}
+                                );
+  }
+
+  backToTop(){
+    this.page = 1;
+    this.getPosts();
   }
 
   itemTapped(post) {
