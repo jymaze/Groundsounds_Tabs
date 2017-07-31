@@ -1,10 +1,10 @@
 <ion-header>
   <ion-navbar padding>
-    <ion-buttons start>
+    <!--<ion-buttons start>
       <button ion-button icon-only (click)="backToTop()">
         <ion-icon name="refresh"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons>-->
     <ion-title>
       <img src="assets/img/GS-logo.png">
     </ion-title>
@@ -21,17 +21,18 @@
 
 <ion-content>
 
-  <ion-refresher [pullMax]="140" (ionRefresh)="refreshPosts($event)">
+  <ion-refresher *ngIf="!busyList" [pullMax]="140" (ionRefresh)="refreshPosts($event)">
     <ion-refresher-content
       pullingText = "Pull to refresh"
       pulling Icon = "arrow-dropdown"
-      refreshingSpinner = "circles"
-      refreshingText = "Refreshing...">
+      refreshingSpinner = "ios"
+      refreshingText = "Refreshing content...">
     </ion-refresher-content>
   </ion-refresher>
 
   <div *ngIf="busyList" class="spinner-container">
       <ion-spinner></ion-spinner>
+      <p>Loading content...</p>
   </div>
   <ion-list>
     <ion-item  *ngFor="let post of posts" (click)="itemTapped($event, post)">
@@ -40,8 +41,11 @@
           <img src="http://www.groundsounds.com/wp-content/uploads/2017/07/unnamed-6-3.jpg" class="customized-image">
         </div>
       </ion-thumbnail>
-      <h2 text-wrap [innerHTML]="post.title.rendered"></h2>
+      <p text-wrap [innerHTML]="post.title.rendered"></p>
       <!--<p text-nowrap [innerHTML]="post.excerpt.rendered"></p>-->
+    </ion-item>
+    <ion-item *ngIf="posts.length>0 && !busyList" (click)="getNextPosts()">
+      <p>Load more posts</p>
     </ion-item>
   </ion-list>
     <!--<ion-row no-padding>

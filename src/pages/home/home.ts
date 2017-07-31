@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, AlertController, Content } from 'ionic-angular';
 
 import { WpApiService } from '../../providers/wp-api'
 
@@ -12,34 +12,44 @@ import { WpApiService } from '../../providers/wp-api'
 
 export class HomePage {
 
+  @ViewChild(Content) content: Content;
+
   public busyList: boolean = false;
-  public posts: any = null;
+  public posts: any = [];
   public page: number = 1;
 
-  constructor(public navCtrl: NavController, private wp: WpApiService) {
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController, private wp: WpApiService) {
 
   }
-
+  
   ionViewDidLoad(){
     console.log('page will enter')
     this.getPosts();
   }
 
+
+  ionView
   getPosts(){
     this.busyList = true;
     console.log('getting page ' + this.page)
     this.wp.getPosts(this.page).subscribe(data => { this.busyList = false; this.posts = data; },
-                                           err => console.error(err),
+                                           err => this.showAlert(),
                                            () => console.log('getPosts completed')
                                 );
   }
 
-  refreshPosts(refresher){
+  getNextPosts(){
     this.page += 1;
-    //this.posts = null;
+    this.content.scrollToTop(200);
+    this.getPosts();
+    this.content.scrollToTop(200);
+  }
+
+  refreshPosts(refresher){
+    this.page = 1;
     console.log('getting page ' + this.page)
     this.wp.getPosts(this.page).subscribe(data => { this.posts = data; },
-                                           err => {console.error(err)},
+                                           err => {this.showAlert()},
                                            () => {console.log('refreshPosts completed'); refresher.complete();}
                                 );
   }
@@ -54,6 +64,15 @@ export class HomePage {
   this.navCtrl.push(NetworkDetailsPage, {
                     contact: passedContact
                    });*/
+  }
+
+  showAlert() {
+  let alert = this.alertCtrl.create({
+    title: 'Something went wrong...',
+    subTitle: 'Data could not be loaded. Please check your network connection',
+    buttons: ['OK']
+  });
+  alert.present();
   }
 
 }
