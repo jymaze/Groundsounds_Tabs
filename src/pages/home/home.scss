@@ -2,7 +2,14 @@ page-home {
     .spinner-container {
         width: 100%;
         text-align: center;
-        padding: 25px;
+        margin: 2px;
+        padding: 0px;
+    }
+
+    .spinner-text{
+        margin: 0px;
+        padding: 2px;
+        font-size: 16px;
     }
 
     .custom-thumbnail{
@@ -30,7 +37,21 @@ page-home {
         overflow: hidden;
     }
 
-    .input-wrapper{
+    .post-title-text{
+        font-size: 16px;
+    }
+
+    .load-more-text{
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .load-more-icon{
+        text-align: center;
+        font-size: 25px;
+    }
+
+    .input-wrapper{ // is the div around the list item text
         padding: 10px 0px !important;
     }
 

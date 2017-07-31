@@ -32,7 +32,7 @@
 
   <div *ngIf="busyList" class="spinner-container">
       <ion-spinner></ion-spinner>
-      <p>Loading content...</p>
+      <p class="spinner-text">Loading content...</p>
   </div>
   <ion-list>
     <ion-item  *ngFor="let post of posts" (click)="itemTapped($event, post)">
@@ -41,11 +41,12 @@
           <img src="http://www.groundsounds.com/wp-content/uploads/2017/07/unnamed-6-3.jpg" class="customized-image">
         </div>
       </ion-thumbnail>
-      <p text-wrap [innerHTML]="post.title.rendered"></p>
+      <p text-wrap class="post-title-text" [innerHTML]="post.title.rendered"></p>
       <!--<p text-nowrap [innerHTML]="post.excerpt.rendered"></p>-->
     </ion-item>
     <ion-item *ngIf="posts.length>0 && !busyList" (click)="getNextPosts()">
-      <p>Load more posts</p>
+      <p class="load-more-text">Load more posts</p>
+      <p class="load-more-icon"><ion-icon name="arrow-dropdown"></ion-icon></p>
     </ion-item>
   </ion-list>
     <!--<ion-row no-padding>

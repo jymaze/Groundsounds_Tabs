@@ -32,7 +32,7 @@ export class HomePage {
   getPosts(){
     this.busyList = true;
     console.log('getting page ' + this.page)
-    this.wp.getPosts(this.page).subscribe(data => { this.busyList = false; this.posts = data; },
+    this.wp.getPosts(this.page).subscribe(data => { this.busyList = false; this.posts = data; this.content.scrollToTop(200); },
                                            err => this.showAlert(),
                                            () => console.log('getPosts completed')
                                 );
@@ -42,7 +42,6 @@ export class HomePage {
     this.page += 1;
     this.content.scrollToTop(200);
     this.getPosts();
-    this.content.scrollToTop(200);
   }
 
   refreshPosts(refresher){
