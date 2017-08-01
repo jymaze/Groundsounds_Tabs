@@ -49,10 +49,11 @@ export class WpApiService {
 
     //this.posts = null;
 
-    let url = this.urlPosts + "?page=" + String(page) + "&per_page="+ String(this.postsPerPage) +"&" + String(Date.now()); // url with page number and ajax timestamp to avoid caching
+    let url = this.urlPosts + "?page=" + String(page) + "&per_page="+
+             String(this.postsPerPage) +"&" + String(Date.now()); // url with page number and ajax timestamp to avoid caching
     
     let posts = this.http.get( url ).retry(5)
-                         .map(res => res.json()); // return observable cast to array of objects
+                         .map(res => res.json())//; // return observable cast to array of objects
     return posts;
 
   }

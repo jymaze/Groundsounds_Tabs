@@ -21,7 +21,7 @@
 
 <ion-content>
 
-  <ion-refresher *ngIf="!busyList" [pullMax]="140" (ionRefresh)="refreshPosts($event)">
+  <ion-refresher *ngIf="!busyList" [pullMax]="150" (ionRefresh)="refreshPosts($event)">
     <ion-refresher-content
       pullingText = "Pull to refresh"
       pulling Icon = "arrow-dropdown"
@@ -44,9 +44,9 @@
       <p text-wrap class="post-title-text" [innerHTML]="post.title.rendered"></p>
       <!--<p text-nowrap [innerHTML]="post.excerpt.rendered"></p>-->
     </ion-item>
-    <ion-item *ngIf="posts.length>0 && !busyList" (click)="getNextPosts()">
+    <ion-item class="load-more-item" *ngIf="posts.length==25 && !busyList"> 
       <p class="load-more-text">Load more posts</p>
-      <p class="load-more-icon"><ion-icon name="arrow-dropdown"></ion-icon></p>
+      <p class="load-more-icon"><ion-icon name="arrow-dropdown-circle" (click)="getNextPosts()"></ion-icon></p>
     </ion-item>
   </ion-list>
     <!--<ion-row no-padding>

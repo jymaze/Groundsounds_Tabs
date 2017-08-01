@@ -12,6 +12,11 @@ page-home {
         font-size: 16px;
     }
 
+    .item-inner{ // container for text content of item, only bottom border is used
+        border-bottom-color: color($colors, primary) !important;
+        border-bottom-width: 1px !important;
+    }
+
     .custom-thumbnail{
         height: 92px;
         width: 92px
@@ -39,16 +44,23 @@ page-home {
 
     .post-title-text{
         font-size: 16px;
+        color: black;
+    }
+
+    .load-more-item{
+        border-bottom-width: 0px !important;
     }
 
     .load-more-text{
         text-align: center;
         font-size: 16px;
+        color: black;
     }
 
     .load-more-icon{
         text-align: center;
-        font-size: 25px;
+        font-size: 32px;
+        color: color($colors, primary);
     }
 
     .input-wrapper{ // is the div around the list item text

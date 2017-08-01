@@ -3,6 +3,8 @@ import { NavController, AlertController, Content } from 'ionic-angular';
 
 import { WpApiService } from '../../providers/wp-api'
 
+import { Post } from '../../models/post';
+
 //import { DomSanitizationService } from '@angular/platform-browser';
 
 @Component({
@@ -18,6 +20,8 @@ export class HomePage {
   public posts: any = [];
   public page: number = 1;
 
+  private postsPerPage: number = 25;
+
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, private wp: WpApiService) {
 
   }
@@ -28,14 +32,26 @@ export class HomePage {
   }
 
 
-  ionView
+  jsonToObjects(posts: any){
+    console.log("jsonToPosts was called");
+    let ret: any = [];
+    for(let i=0; i<posts.length; i++){
+      //console.log(i);
+      let item = posts[i];
+      //console.log("item looked at");
+      //console.log(item);
+      ret.push( new Post(item.id, item.date, item.link, item.title.rendered, item.featured_media) );
+    };
+    console.log(ret);
+
+  }
+
   getPosts(){
     this.busyList = true;
     console.log('getting page ' + this.page)
-    this.wp.getPosts(this.page).subscribe(data => { this.busyList = false; this.posts = data; this.content.scrollToTop(200); },
+    this.wp.getPosts(this.page).subscribe( data => { this.busyList = false; this.jsonToObjects(data); this.posts = data; this.content.scrollToTop(200); },
                                            err => this.showAlert(),
-                                           () => console.log('getPosts completed')
-                                );
+                                           () => console.log('getPosts completed') );
   }
 
   getNextPosts(){
@@ -53,10 +69,10 @@ export class HomePage {
                                 );
   }
 
-  backToTop(){
+  /*backToTop(){
     this.page = 1;
     this.getPosts();
-  }
+  }*/
 
   itemTapped(post) {
   /*let passedPost = new Contact(contact)
