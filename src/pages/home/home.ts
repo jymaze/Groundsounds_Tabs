@@ -20,7 +20,7 @@ export class HomePage {
   public posts: any = [];
   public page: number = 1;
 
-  private postsPerPage: number = 15;
+  //private postsPerPage: number = 20;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, private wp: WpApiService) {
 
@@ -62,8 +62,8 @@ export class HomePage {
   getPicLinks(){
     console.log("getting pics");
     for (let i=0; i<this.posts.length; i++){
-      let picLink = this.wp.getPictureLink(this.posts[i].media)
-                           .subscribe( data => { this.posts[i].setPicture( data["guid"]["rendered"]); /*console.log(this.posts[i])*/;  } ); 
+      this.wp.getPictureLink(this.posts[i].media)
+             .subscribe( data => { this.posts[i].setPicture( data["guid"]["rendered"]); /*console.log(this.posts[i])*/;  } ); 
     };
   } 
 

@@ -18,7 +18,7 @@ import { SecurityContext } from '@angular/core';
 export class WpApiService {
 
   private url: string = 'http://www.groundsounds.com/wp-json/wp/v2/'; //?per_page=50
-  private postsPerPage: number = 15;
+  private postsPerPage: number = 20;
   //public posts: any;
   //public rawPosts: any;
 
