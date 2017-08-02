@@ -20,7 +20,7 @@ export class HomePage {
   public posts: any = [];
   public page: number = 1;
 
-  private postsPerPage: number = 25;
+  private postsPerPage: number = 10;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, private wp: WpApiService) {
 
@@ -42,17 +42,30 @@ export class HomePage {
       //console.log(item);
       ret.push( new Post(item.id, item.date, item.link, item.title.rendered, item.featured_media) );
     };
-    console.log(ret);
+    //console.log(ret[0]);
+    return (ret);
 
   }
 
   getPosts(){
     this.busyList = true;
     console.log('getting page ' + this.page)
-    this.wp.getPosts(this.page).subscribe( data => { this.busyList = false; this.jsonToObjects(data); this.posts = data; this.content.scrollToTop(200); },
+    this.wp.getPosts(this.page).subscribe( data => { this.busyList = false;
+                                                     this.posts = this.jsonToObjects(data); 
+                                                     this.content.scrollToTop(200);
+                                                     this.getPicLinks();
+                                                   },
                                            err => this.showAlert(),
                                            () => console.log('getPosts completed') );
   }
+
+  getPicLinks(){
+    console.log("getting pics");
+    for (let i=0; i<this.posts.length; i++){
+      let picLink = this.wp.getPictureLink(this.posts[i].media)
+                           .subscribe( data => { this.posts[i].setPicture( data["guid"]["rendered"]); /*console.log(this.posts[i])*/;  } ); 
+    };
+  } 
 
   getNextPosts(){
     this.page += 1;
@@ -63,7 +76,8 @@ export class HomePage {
   refreshPosts(refresher){
     this.page = 1;
     console.log('getting page ' + this.page)
-    this.wp.getPosts(this.page).subscribe(data => { this.posts = data; },
+    this.wp.getPosts(this.page).subscribe(data => { this.posts = this.jsonToObjects(data);
+                                                    this.getPicLinks(); },
                                            err => {this.showAlert()},
                                            () => {console.log('refreshPosts completed'); refresher.complete();}
                                 );

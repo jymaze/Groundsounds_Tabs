@@ -17,8 +17,8 @@ import { SecurityContext } from '@angular/core';
 @Injectable()
 export class WpApiService {
 
-  private urlPosts: string = 'http://www.groundsounds.com/wp-json/wp/v2/posts'; //?per_page=50
-  private postsPerPage: number = 25;
+  private url: string = 'http://www.groundsounds.com/wp-json/wp/v2/'; //?per_page=50
+  private postsPerPage: number = 10;
   //public posts: any;
   //public rawPosts: any;
 
@@ -49,17 +49,21 @@ export class WpApiService {
 
     //this.posts = null;
 
-    let url = this.urlPosts + "?page=" + String(page) + "&per_page="+
+    let url = this.url + "posts?page=" + String(page) + "&per_page="+
              String(this.postsPerPage) +"&" + String(Date.now()); // url with page number and ajax timestamp to avoid caching
     
-    let posts = this.http.get( url ).retry(5)
-                         .map(res => res.json())//; // return observable cast to array of objects
-    return posts;
+    let postsJSON = this.http.get( url ).retry(5)
+                         .map(res => res.json()); // return observable cast to array of objects
+    return postsJSON;
 
   }
 
-  getPictures(media: number){
+  getPictureLink(media: number){
+    let url = this.url + "media/" + String(media);
 
+    let mediaJSON = this.http.get( url ).retry(5)
+                           .map(res => res.json());
+    return mediaJSON;
   }
 
 }
