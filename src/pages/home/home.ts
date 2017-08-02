@@ -20,7 +20,7 @@ export class HomePage {
   public posts: any = [];
   public page: number = 1;
 
-  private postsPerPage: number = 10;
+  private postsPerPage: number = 15;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, private wp: WpApiService) {
 

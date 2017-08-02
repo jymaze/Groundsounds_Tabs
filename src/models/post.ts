@@ -5,7 +5,7 @@ export class Post {
   link: string;
   title: string;
   media: number; //media #
-  picture: string = "assets/icon/icon.png"; //link to picture, retrieved from media page, placeholder while loading
+  picture: string = "assets/img/placeholder.png"; //link to picture, retrieved from media page, placeholder while loading
 
   constructor(id: number, date: string, link: string, title: string, media: number){
     this.id = id;
