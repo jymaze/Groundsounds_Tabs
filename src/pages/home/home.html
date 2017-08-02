@@ -21,7 +21,7 @@
 
 <ion-content>
 
-  <ion-refresher *ngIf="!busyList" [pullMax]="150" (ionRefresh)="refreshPosts($event)">
+  <ion-refresher *ngIf="!busyList" [pullMax]="200" (ionRefresh)="refreshPosts($event)">
     <ion-refresher-content
       pullingText = "Pull to refresh"
       pulling Icon = "arrow-dropdown"
