@@ -1,8 +1,9 @@
 page-home {
     .spinner-container {
         width: 100%;
+        block-size: 72px;
         text-align: center;
-        margin: 2px;
+        margin: 20px 0px 0px 0px;
         padding: 0px;
         border-bottom-color: color($colors, primary);
     }
@@ -13,9 +14,9 @@ page-home {
         font-size: 16px;
     }
 
-    /*.scroll-content .ion-list{
-        border-top-color: color($colors, primary) !important;
-    }*/
+    .refresher-refreshing{
+        margin-top: 30px;
+    }
 
     .item-inner{ // container for text content of item, only bottom border is used
         border-bottom-color: color($colors, primary) !important;
