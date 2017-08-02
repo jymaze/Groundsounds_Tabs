@@ -58,4 +58,8 @@ export class WpApiService {
 
   }
 
+  getPictures(media: number){
+
+  }
+
 }

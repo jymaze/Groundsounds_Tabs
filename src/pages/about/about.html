@@ -11,6 +11,6 @@
   <div *ngFor="let post of posts">
     <p>{{post.title.rendered}}</p>
     <p>{{post.id}}</p>
-    <p>{{post.excerpt.rendered}}</p>
+    <div [innerHTML]="post.excerpt.rendered"></div>
   </div>
 </ion-content>

@@ -46,14 +46,14 @@ $colors: (
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
-
+$tabs-ios-tab-color-inactive: color($colors, dark);
 
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-
+$tabs-mp-tab-color-inactive: color($colors, dark);
 
 
 // App Windows Variables

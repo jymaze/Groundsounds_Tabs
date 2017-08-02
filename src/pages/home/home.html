@@ -34,7 +34,9 @@
       <ion-spinner></ion-spinner>
       <p class="spinner-text">Loading content...</p>
   </div>
+
   <ion-list>
+
     <ion-item  *ngFor="let post of posts" (click)="itemTapped($event, post)">
       <ion-thumbnail item-start class="custom-thumbnail">
         <div class="crop-div">
@@ -43,11 +45,16 @@
       </ion-thumbnail>
       <p text-wrap class="post-title-text" [innerHTML]="post.title.rendered"></p>
       <!--<p text-nowrap [innerHTML]="post.excerpt.rendered"></p>-->
+      <div item-end class="forward-icon"><ion-icon name="arrow-dropright-circle"></ion-icon></div>
     </ion-item>
+
     <ion-item class="load-more-item" *ngIf="posts.length==25 && !busyList"> 
-      <p class="load-more-text">Load more posts</p>
-      <p class="load-more-icon"><ion-icon name="arrow-dropdown-circle" (click)="getNextPosts()"></ion-icon></p>
+      <div>
+        <p class="load-more-text">Load more posts</p>
+        <p class="load-more-icon" (click)="getNextPosts()"><ion-icon name="arrow-dropdown-circle"></ion-icon></p>
+      </div>
     </ion-item>
+
   </ion-list>
     <!--<ion-row no-padding>
       <ion-col>

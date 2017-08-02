@@ -4,6 +4,7 @@ page-home {
         text-align: center;
         margin: 2px;
         padding: 0px;
+        border-bottom-color: color($colors, primary);
     }
 
     .spinner-text{
@@ -11,6 +12,10 @@ page-home {
         padding: 2px;
         font-size: 16px;
     }
+
+    /*.scroll-content .ion-list{
+        border-top-color: color($colors, primary) !important;
+    }*/
 
     .item-inner{ // container for text content of item, only bottom border is used
         border-bottom-color: color($colors, primary) !important;
@@ -44,7 +49,12 @@ page-home {
 
     .post-title-text{
         font-size: 16px;
-        color: black;
+        color: color($colors, dark);
+    }
+
+    .forward-icon{
+        font-size: 24px !important;
+        color: color($colors, primary);
     }
 
     .load-more-item{
@@ -54,7 +64,7 @@ page-home {
     .load-more-text{
         text-align: center;
         font-size: 16px;
-        color: black;
+        color: color($colors, dark);
     }
 
     .load-more-icon{
