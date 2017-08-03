@@ -13,6 +13,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { WpApiService } from '../providers/wp-api';
 import { HttpModule } from '@angular/http';
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
+import {InAppBrowser} from "@ionic-native/in-app-browser";
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { ScreenOrientation } from "@ionic-native/screen-orientation";
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     WpApiService,
-    ScreenOrientation
+    ScreenOrientation,
+    InAppBrowser
   ]
 })
 export class AppModule {}

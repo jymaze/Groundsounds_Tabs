@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, AlertController, Content } from 'ionic-angular';
 
 import { WpApiService } from '../../providers/wp-api'
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { Post } from '../../models/post';
 
@@ -22,7 +23,7 @@ export class HomePage {
 
   //private postsPerPage: number = 20;
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController, private wp: WpApiService) {
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController, private wp: WpApiService, private inAppBrowser: InAppBrowser) {
 
   }
   
@@ -88,11 +89,14 @@ export class HomePage {
     this.getPosts();
   }*/
 
-  itemTapped(post) {
+  itemTapped(post) { //delete ct-top-entry
   /*let passedPost = new Contact(contact)
   this.navCtrl.push(NetworkDetailsPage, {
                     contact: passedContact
                    });*/
+    //this.showAlert();
+    console.log(post.link);
+    let browser = this.inAppBrowser.create(post.link, "_self", "location = no");
   }
 
   showAlert() {
