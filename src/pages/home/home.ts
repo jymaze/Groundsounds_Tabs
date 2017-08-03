@@ -94,9 +94,9 @@ export class HomePage {
   this.navCtrl.push(NetworkDetailsPage, {
                     contact: passedContact
                    });*/
-    //this.showAlert();
+    this.showAlert();
     console.log(post.link);
-    let browser = this.inAppBrowser.create(post.link, "_self", "location = no");
+    let browser = this.inAppBrowser.create(post.link, "_blank", "location = no");
   }
 
   showAlert() {
