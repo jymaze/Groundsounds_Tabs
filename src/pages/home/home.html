@@ -6,7 +6,7 @@
       </button>
     </ion-buttons>-->
     <ion-title>
-      <img src="assets/img/GS-logo.png">
+      <img class = "logo" src="assets/img/GS-logo.png">
     </ion-title>
   </ion-navbar>
 
@@ -21,7 +21,7 @@
 
 <ion-content>
 
-  <ion-refresher *ngIf="!busyList" [pullMin]="90" [pullMax]="150" (ionRefresh)="refreshPosts($event)">
+  <ion-refresher *ngIf="!busyList" [pullMin]="60" [pullMax]="200" (ionRefresh)="refreshPosts($event)">
     <ion-refresher-content
       pullingText = "Pull to refresh"
       pulling Icon = "arrow-dropdown"
