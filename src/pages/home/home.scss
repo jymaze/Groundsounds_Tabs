@@ -1,7 +1,14 @@
 page-home {
 
+    .toolbar-title{
+        height: 44px;
+        width: 100%;
+    }
+
     .logo{
-        height: 38px;
+        height: 38px !important;
+        width: 181px !important;
+        margin: 3px 0px 3px 0px !important;
     }
 
     .spinner-container {

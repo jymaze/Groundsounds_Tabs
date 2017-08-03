@@ -7,10 +7,10 @@ import { SecurityContext } from '@angular/core';
 import { WpApiService } from '../../providers/wp-api'
 
 @Component({
-  selector: 'page-about',
-  templateUrl: 'about.html'
+  selector: 'page-search',
+  templateUrl: 'search.html'
 })
-export class AboutPage {
+export class SearchPage {
 
   /*gsUrl: SafeResourceUrl;
 
