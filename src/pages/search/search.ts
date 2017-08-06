@@ -23,11 +23,15 @@ export class SearchPage {
     this.getPosts();
   }
 
+  ionViewDidLoad(){
+
+  }
+
   getPosts(){
     this.busyList = true;
     this.wp.getPosts(1).subscribe( data => { this.busyList = false; this.posts = data;
-                                              this.gsUrl = this.sanitizer.bypassSecurityTrustHtml(this.posts[0].content.rendered)
-                                              this.gsTitle = this.posts[0].title.rendered;
+                                              this.gsUrl = this.sanitizer.bypassSecurityTrustHtml(this.posts[3].content.rendered)
+                                              this.gsTitle = this.posts[3].title.rendered;
                                            } );
     //this.test="done";
   }
