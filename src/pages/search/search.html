@@ -1,17 +1,45 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar padding>
     <ion-title>
-      Search
+      <img class = "logo" src="assets/img/GS-logo.png">
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3 [innerHTML]= "gsTitle"></h3>
-  <div [innerHTML]="gsUrl"></div>
-  <!--<div *ngFor="let post of posts">
-    <p>{{post.title.rendered}}</p>
-    <p>{{post.id}}</p>
-    <div [innerHTML]="post.excerpt.rendered"></div>
-  </div>-->
+<ion-content class="cards-bg">
+
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <h1 class="card-title"[innerHTML]= "gsTitle"></h1>
+
+      <div [innerHTML]="gsUrl"></div>
+
+    </ion-card-content>
+
+    <ion-row no-padding>
+      <ion-col>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='star'></ion-icon>
+          Favorite
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='musical-notes'></ion-icon>
+          Listen
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='share-alt'></ion-icon>
+          Share
+        </button>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
 </ion-content>

@@ -97,7 +97,7 @@ export class HomePage {
                    });*/
     console.log("getting that post: " + post.link);
     let browser = this.inAppBrowser.create(post.link, "_blank", 
-                "location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=yes");
+                "location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=no");
     /*browser.on('loadstop').subscribe( () => { browser.insertCSS( { code: ".ct-top-entry, .row{display:none !important;}" } ) },
                                               err=> {console.log(err)} );*/
     //browser.insertCSS( { code: "#secondary{display:none !important;}" } );
