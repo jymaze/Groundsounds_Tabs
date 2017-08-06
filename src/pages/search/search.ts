@@ -12,23 +12,23 @@ import { WpApiService } from '../../providers/wp-api'
 })
 export class SearchPage {
 
-  /*gsUrl: SafeResourceUrl;
-
-  constructor(public navCtrl: NavController, public sanitizer: DomSanitizer) {
-    this.gsUrl = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.groundsounds.com/')
-  }*/
+  gsUrl: SafeResourceUrl;
+  gsTitle: string;
 
   public busyList: boolean = false;
   public posts: any;
   public test: string = 'test';
 
-  constructor(public navCtrl: NavController, private wp: WpApiService) {
+  constructor(public navCtrl: NavController, private wp: WpApiService, public sanitizer: DomSanitizer) {
     this.getPosts();
   }
 
   getPosts(){
     this.busyList = true;
-    this.wp.getPosts(1).subscribe(data => { this.busyList = false; this.posts = data;} );
+    this.wp.getPosts(1).subscribe( data => { this.busyList = false; this.posts = data;
+                                              this.gsUrl = this.sanitizer.bypassSecurityTrustHtml(this.posts[0].content.rendered)
+                                              this.gsTitle = this.posts[0].title.rendered;
+                                           } );
     //this.test="done";
   }
 

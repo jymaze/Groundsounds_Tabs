@@ -56,7 +56,7 @@ export class HomePage {
                                                      this.content.scrollToTop(250);
                                                      this.getPicLinks();
                                                    },
-                                           err => this.showAlert(),
+                                           err => {this.busyList = false; this.showAlert()},
                                            () => console.log('getPosts completed') );
   }
 
@@ -78,8 +78,9 @@ export class HomePage {
     this.page = 1;
     console.log('getting page ' + this.page)
     this.wp.getPosts(this.page).subscribe(data => { this.posts = this.jsonToObjects(data);
-                                                    this.getPicLinks(); },
-                                           err => {this.showAlert()},
+                                                    this.getPicLinks(); 
+                                                  },
+                                           err => {refresher.complete(); this.showAlert()},
                                            () => {console.log('refreshPosts completed'); refresher.complete();}
                                 );
   }
@@ -89,13 +90,18 @@ export class HomePage {
     this.getPosts();
   }*/
 
-  itemTapped(post) { //delete ct-top-entry
+  itemTapped(post) { //delete class ct-top-entry from id masthead
   /*let passedPost = new Contact(contact)
   this.navCtrl.push(NetworkDetailsPage, {
                     contact: passedContact
                    });*/
     console.log("getting that post: " + post.link);
-    let browser = this.inAppBrowser.create(post.link, "_blank", "location = no");
+    let browser = this.inAppBrowser.create(post.link, "_blank", 
+                "location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=yes");
+    /*browser.on('loadstop').subscribe( () => { browser.insertCSS( { code: ".ct-top-entry, .row{display:none !important;}" } ) },
+                                              err=> {console.log(err)} );*/
+    //browser.insertCSS( { code: "#secondary{display:none !important;}" } );
+  
   }
 
   showAlert() {

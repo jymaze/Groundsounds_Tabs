@@ -7,10 +7,11 @@
 </ion-header>
 
 <ion-content padding>
-  <p [innerHTML]= "test"></p>
-  <div *ngFor="let post of posts">
+  <h3 [innerHTML]= "gsTitle"></h3>
+  <div [innerHTML]="gsUrl"></div>
+  <!--<div *ngFor="let post of posts">
     <p>{{post.title.rendered}}</p>
     <p>{{post.id}}</p>
     <div [innerHTML]="post.excerpt.rendered"></div>
-  </div>
+  </div>-->
 </ion-content>

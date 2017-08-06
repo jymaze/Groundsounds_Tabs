@@ -89,4 +89,21 @@ page-home {
         padding: 10px 0px !important;
     }
 
+    .inAppBrowserWrap{
+        background-color: color($colors, primary);
+        color: color($colors, primary);
+    }
+
+    .inAppBrowserWrap menu li {
+        font-size: 25px;
+        height: 25px;
+        float: left;
+        margin: 0 10px;
+        padding: 3px 10px;
+        text-decoration: none;
+        color: red;
+        display: block;
+        background: white;
+    }
+
 }

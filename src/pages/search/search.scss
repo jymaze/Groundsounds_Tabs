@@ -1,9 +1,15 @@
 page-search {
-    ion-content{
-        iframe{
-            height: 100%;
-            width: 100%;
-            border: none;
-        }
+    .relatedthumb{
+        margin-left: auto !important;
+        margin-right: auto !important;
+        float: none !important;
+    }
+
+    .yuzo__title{
+        text-align: center;
+    }
+
+    .yuzo_related_post{
+        display: none !important;
     }
 }
