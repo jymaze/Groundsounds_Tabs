@@ -18,7 +18,7 @@ import { SecurityContext } from '@angular/core';
 export class WpApiService {
 
   private url: string = 'http://www.groundsounds.com/wp-json/wp/v2/'; //?per_page=50
-  private postsPerPage: number = 20;
+  //private postsPerPage: number = 20;
   //public posts: any;
   //public rawPosts: any;
 
@@ -45,12 +45,12 @@ export class WpApiService {
     });
   }*/
 
-  getPosts(page: number){
+  getPosts(page: number, perPage: number){
 
     //this.posts = null;
 
     let url = this.url + "posts?page=" + String(page) + "&per_page="+
-             String(this.postsPerPage) +"&" + String(Date.now()); // url with page number and ajax timestamp to avoid caching
+             String(perPage) +"&" + String(Date.now()); // url with page number and ajax timestamp to avoid caching
     
     let postsJSON = this.http.get( url ).retry(5)
                          .map(res => res.json()); // return observable cast to array of objects

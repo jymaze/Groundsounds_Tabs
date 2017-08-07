@@ -29,9 +29,9 @@ export class SearchPage {
 
   getPosts(){
     this.busyList = true;
-    this.wp.getPosts(1).subscribe( data => { this.busyList = false; this.posts = data;
-                                              this.gsUrl = this.sanitizer.bypassSecurityTrustHtml(this.posts[3].content.rendered)
-                                              this.gsTitle = this.posts[3].title.rendered;
+    this.wp.getPosts(1, 5).subscribe( data => { this.busyList = false; this.posts = data;
+                                              this.gsUrl = this.sanitizer.bypassSecurityTrustHtml(this.posts[1].content.rendered)
+                                              this.gsTitle = this.posts[1].title.rendered;
                                            } );
     //this.test="done";
   }

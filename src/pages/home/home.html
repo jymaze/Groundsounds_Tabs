@@ -48,7 +48,7 @@
       <div item-end class="forward-icon"><ion-icon name="arrow-dropright-circle"></ion-icon></div>
     </ion-item>
 
-    <ion-item class="load-more-item" *ngIf="posts.length==20 && !busyList"> 
+    <ion-item class="load-more-item" *ngIf="posts.length==perPage && !busyList"> 
       <div>
         <p class="load-more-text">Load more posts</p>
         <p class="load-more-icon" (click)="getNextPosts()"><ion-icon name="arrow-dropdown-circle"></ion-icon></p>

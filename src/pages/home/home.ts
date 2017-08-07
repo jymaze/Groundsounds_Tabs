@@ -21,7 +21,7 @@ export class HomePage {
   public posts: any = [];
   public page: number = 1;
 
-  //private postsPerPage: number = 20;
+  public perPage: number = 20; // Important!
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, private wp: WpApiService, private inAppBrowser: InAppBrowser) {
 
@@ -43,7 +43,7 @@ export class HomePage {
       //console.log(item);
       ret.push( new Post(item.id, item.date, item.link, item.title.rendered, item.content.rendered, item.featured_media) );
     };
-    console.log(ret[0]);
+    //console.log(ret[0]);
     return (ret);
 
   }
@@ -51,7 +51,7 @@ export class HomePage {
   getPosts(){
     this.busyList = true;
     console.log('getting page ' + this.page)
-    this.wp.getPosts(this.page).subscribe( data => { this.busyList = false;
+    this.wp.getPosts(this.page, this.perPage).subscribe( data => { this.busyList = false;
                                                      this.posts = this.jsonToObjects(data); 
                                                      this.content.scrollToTop(250);
                                                      this.getPicLinksByRegex();
@@ -71,14 +71,22 @@ export class HomePage {
   getPicLinksByRegex(){
     console.log("getting pics by Regex");
     for (let i=0; i<this.posts.length; i++){
-      let regex = /href="([\S]+)"/; // match any address ending with picture extension
-      let picLink = this.posts[i].content.match(/(?:href|src)="(\S+\.(?:jpg|jpeg|gif|png))"/);
+      // match any src address ending with picture extension
+      let picLink = this.posts[i].content.match(/src="(\S+\.(?:jpg|jpeg|gif|png))"/);
       if(picLink){
         this.posts[i].setPicture(picLink[1]);
       }
-      else{ // fallback on querying the api for media if no picture found (if only video in post)
-        this.wp.getPictureLink(this.posts[i].media)
+      else{ // if fail, try with href
+        console.log("had to try href");
+        let picLinkAlt = this.posts[i].content.match(/href="(\S+\.(?:jpg|jpeg|gif|png))"/);
+        if(picLinkAlt){
+          this.posts[i].setPicture(picLinkAlt[1]);
+        }
+        else{// fallback on querying the api for media if no picture found (if only video in post)
+          console.log("fallback on api");
+          this.wp.getPictureLink(this.posts[i].media)
              .subscribe( data => { this.posts[i].setPicture( data["guid"]["rendered"]); } );
+        }
       }
     };
   } 
@@ -92,7 +100,7 @@ export class HomePage {
   refreshPosts(refresher){
     this.page = 1;
     console.log('getting page ' + this.page)
-    this.wp.getPosts(this.page).subscribe(data => { this.posts = this.jsonToObjects(data);
+    this.wp.getPosts(this.page, this.perPage).subscribe(data => { this.posts = this.jsonToObjects(data);
                                                     this.getPicLinksByRegex(); 
                                                   },
                                            err => {refresher.complete(); this.showAlert()},
