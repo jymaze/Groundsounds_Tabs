@@ -72,7 +72,7 @@ export class HomePage {
     console.log("getting pics by Regex");
     for (let i=0; i<this.posts.length; i++){
       let regex = /href="([\S]+)"/; // match any address ending with picture extension
-      let picLink = this.posts[i].content.match(/(?:href|src)="(\S+\.(?:jpg|gif|png))"/);
+      let picLink = this.posts[i].content.match(/(?:href|src)="(\S+\.(?:jpg|jpeg|gif|png))"/);
       if(picLink){
         this.posts[i].setPicture(picLink[1]);
       }
