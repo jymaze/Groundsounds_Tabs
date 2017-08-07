@@ -6,40 +6,44 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="cards-bg">
+<ion-content padding>
 
 
-  <ion-card>
+  <!--<ion-card>
 
-    <ion-card-content>
+    <ion-card-content>-->
 
-      <h1 class="card-title"[innerHTML]= "gsTitle"></h1>
+      <div class="title-container">
+        <h1 [innerHTML]= "gsTitle"></h1>
+      </div>
+
+      <hr>
 
       <div [innerHTML]="gsUrl"></div>
 
-    </ion-card-content>
+    <!--</ion-card-content>-->
 
-    <ion-row no-padding>
+    <ion-row class="fav-share" no-padding>
       <ion-col>
-        <button ion-button clear small color="danger" icon-start>
+        <button ion-button clear small color="primary" icon-start>
           <ion-icon name='star'></ion-icon>
           Favorite
         </button>
       </ion-col>
-      <ion-col text-center>
+      <!--<ion-col text-center>
         <button ion-button clear small color="danger" icon-start>
           <ion-icon name='musical-notes'></ion-icon>
           Listen
         </button>
-      </ion-col>
+      </ion-col>-->
       <ion-col text-right>
-        <button ion-button clear small color="danger" icon-start>
+        <button ion-button clear small color="primary" icon-start>
           <ion-icon name='share-alt'></ion-icon>
           Share
         </button>
       </ion-col>
     </ion-row>
 
-  </ion-card>
+  <!--</ion-card>-->
 
 </ion-content>

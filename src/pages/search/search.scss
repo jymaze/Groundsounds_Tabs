@@ -11,8 +11,8 @@ page-search {
         margin: 3px 0px 3px 0px !important;
     }
 
-    .card-title{
-        padding: 35px 0px 35px 0px !important;
+    .title-container{
+        padding: 25px 0px 25px 0px !important;
         border-bottom-width: 3px !important;
         border-top-width: 3px !important;
         border-color: color($colors, primary) !important;
@@ -21,27 +21,40 @@ page-search {
         font-weight: bold !important;
     }
 
+    hr{
+        height: 1px;
+        border-bottom-width: 1px !important;
+        border-bottom-color: red;
+        color: transparent;
+    }
+
     a{
         color: teal !important;
     }
 
     p{
         text-align: justify !important;
+        font-size: 16px;
+        line-height: 1.3em;
         color: color($colors, dark) !important;
     }
 
-    ion-card-content{
+    ion-content{
         img{
-       padding: 35px 0px 35px 0px !important;
+       padding: 30px 0px 30px 0px !important;
        width: 100% !important;
        height: auto !important; 
         }
     }
 
     iframe{
-       padding: 50px 0px 25px 0px !important;
+       padding: 30px 0px 25px 0px !important;
        width: 100% !important;
        height: auto !important; 
+    }
+
+    button{
+        font-size: 16px !important;
     }
 
     .relatedthumb{

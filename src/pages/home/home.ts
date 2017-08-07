@@ -41,9 +41,9 @@ export class HomePage {
       let item = posts[i];
       //console.log("item looked at");
       //console.log(item);
-      ret.push( new Post(item.id, item.date, item.link, item.title.rendered, item.featured_media) );
+      ret.push( new Post(item.id, item.date, item.link, item.title.rendered, item.content.rendered, item.featured_media) );
     };
-    //console.log(ret[0]);
+    console.log(ret[0]);
     return (ret);
 
   }
@@ -54,17 +54,32 @@ export class HomePage {
     this.wp.getPosts(this.page).subscribe( data => { this.busyList = false;
                                                      this.posts = this.jsonToObjects(data); 
                                                      this.content.scrollToTop(250);
-                                                     this.getPicLinks();
+                                                     this.getPicLinksByRegex();
                                                    },
                                            err => {this.busyList = false; this.showAlert()},
                                            () => console.log('getPosts completed') );
   }
 
-  getPicLinks(){
-    console.log("getting pics");
+  /*getPicLinksByApi(){
+    console.log("getting pics by API");
     for (let i=0; i<this.posts.length; i++){
       this.wp.getPictureLink(this.posts[i].media)
-             .subscribe( data => { this.posts[i].setPicture( data["guid"]["rendered"]); /*console.log(this.posts[i])*/;  } ); 
+             .subscribe( data => { this.posts[i].setPicture( data["guid"]["rendered"]); } ); 
+    };
+  }*/
+
+  getPicLinksByRegex(){
+    console.log("getting pics by Regex");
+    for (let i=0; i<this.posts.length; i++){
+      let regex = /href="([\S]+)"/; // match any address ending with picture extension
+      let picLink = this.posts[i].content.match(/(?:href|src)="(\S+\.(?:jpg|gif|png))"/);
+      if(picLink){
+        this.posts[i].setPicture(picLink[1]);
+      }
+      else{ // fallback on querying the api for media if no picture found (if only video in post)
+        this.wp.getPictureLink(this.posts[i].media)
+             .subscribe( data => { this.posts[i].setPicture( data["guid"]["rendered"]); } );
+      }
     };
   } 
 
@@ -78,7 +93,7 @@ export class HomePage {
     this.page = 1;
     console.log('getting page ' + this.page)
     this.wp.getPosts(this.page).subscribe(data => { this.posts = this.jsonToObjects(data);
-                                                    this.getPicLinks(); 
+                                                    this.getPicLinksByRegex(); 
                                                   },
                                            err => {refresher.complete(); this.showAlert()},
                                            () => {console.log('refreshPosts completed'); refresher.complete();}
