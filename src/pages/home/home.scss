@@ -44,6 +44,9 @@ page-home {
         height: 92px;
         width: 92px;
         overflow: hidden;
+        border-style: solid !important;
+        border-width: 1px !important;
+        border-color: color($colors, lighttone);
     }
 
     .customized-image{ //styled for keeping aspect ratio and get a centered img in the div

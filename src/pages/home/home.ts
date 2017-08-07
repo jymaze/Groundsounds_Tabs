@@ -53,7 +53,7 @@ export class HomePage {
     console.log('getting page ' + this.page)
     this.wp.getPosts(this.page, this.perPage).subscribe( data => { this.busyList = false;
                                                      this.posts = this.jsonToObjects(data); 
-                                                     this.content.scrollToTop(250);
+                                                     this.content.scrollToTop();
                                                      this.getPicLinksByRegex();
                                                    },
                                            err => {this.busyList = false; this.showAlert()},
@@ -93,7 +93,7 @@ export class HomePage {
 
   getNextPosts(){
     this.page += 1;
-    this.content.scrollToTop(250);
+    this.content.scrollToTop();
     this.getPosts();
   }
 
