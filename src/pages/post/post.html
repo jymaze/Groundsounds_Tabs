@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar padding>
+    <ion-title>
+      <img class = "logo" src="assets/img/GS-logo.png">
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+
+  <!--<ion-card>
+
+    <ion-card-content>-->
+
+      <div class="title-container">
+        <h1 [innerHTML]= "title"></h1>
+      </div>
+
+      <hr>
+
+      <div [innerHTML]="content"></div>
+
+    <!--</ion-card-content>-->
+
+    <ion-row class="fav-share" no-padding>
+      <ion-col>
+        <button ion-button clear small color="primary" icon-start>
+          <ion-icon name='star'></ion-icon>
+          Favorite
+        </button>
+      </ion-col>
+      <!--<ion-col text-center>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='musical-notes'></ion-icon>
+          Listen
+        </button>
+      </ion-col>-->
+      <ion-col text-right>
+        <button ion-button clear small color="primary" icon-start>
+          <ion-icon name='share-alt'></ion-icon>
+          Share
+        </button>
+      </ion-col>
+    </ion-row>
+
+  <!--</ion-card>-->
+
+</ion-content>

@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { SearchPage } from '../pages/search/search';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
+import { PostPage } from '../pages/post/post';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -13,7 +14,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { WpApiService } from '../providers/wp-api';
 import { HttpModule } from '@angular/http';
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
-import {InAppBrowser} from "@ionic-native/in-app-browser";
+import { InAppBrowser } from "@ionic-native/in-app-browser";
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {InAppBrowser} from "@ionic-native/in-app-browser";
     SearchPage,
     ContactPage,
     HomePage,
+    PostPage,
     TabsPage
   ],
   imports: [
@@ -35,6 +37,7 @@ import {InAppBrowser} from "@ionic-native/in-app-browser";
     SearchPage,
     ContactPage,
     HomePage,
+    PostPage,
     TabsPage
   ],
   providers: [

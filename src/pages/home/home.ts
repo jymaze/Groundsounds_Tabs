@@ -6,6 +6,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { Post } from '../../models/post';
 
+import { PostPage } from '../post/post';
+
 //import { DomSanitizationService } from '@angular/platform-browser';
 
 @Component({
@@ -113,25 +115,18 @@ export class HomePage {
     this.getPosts();
   }*/
 
-  itemTapped(post, event) { //delete class ct-top-entry from id masthead
-  /*let passedPost = new Contact(contact)
-  this.navCtrl.push(NetworkDetailsPage, {
-                    contact: passedContact
-                   });*/
+  itemTapped(post) { //delete class ct-top-entry from id masthead - not needed
     if(this.busyList){
       return
     }
-    //let clicked = event.currentTarget;
-    console.log("getting that post: " + post.link);
-    //console.log(clicked);
-    //clicked.setAttribute("style", "background-color: lightgrey;");
-    //setTimeout( () => {clicked.setAttribute("style", "background-color: white;")}, 200);
-    let browser = this.inAppBrowser.create(post.link, "_blank", 
+    console.log("opening that post: " + post.link);
+
+    this.navCtrl.push(PostPage, {
+                    post: post
+                   });
+    /*let browser = this.inAppBrowser.create(post.link, "_blank", 
                 "location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=no");
-    /*browser.on('loadstop').subscribe( () => { browser.insertCSS( { code: ".ct-top-entry, .row{display:none !important;}" } ) },
-                                              err=> {console.log(err)} );*/
-    //browser.insertCSS( { code: "#secondary{display:none !important;}" } );
-  
+    */
   }
 
   showAlert() {

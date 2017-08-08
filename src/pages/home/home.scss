@@ -70,7 +70,7 @@ page-home {
         color: color($colors, dark);
     }
 
-    .forward-icon{
+    .forward-button{
         height: 32px !important;
         width: 32px !important;
         font-size: 26px !important;
@@ -87,9 +87,16 @@ page-home {
         color: color($colors, dark);
     }
 
-    .load-more-icon{
+    .load-more-div{
         text-align: center;
-        font-size: 32px;
+    }
+
+    .load-more-button{
+        height: 38px !important;
+        width: 56px !important;
+        text-align: center;
+        font-size: 32px !important;
+        margin: auto !important;
         color: color($colors, primary);
     }
 

@@ -45,16 +45,18 @@
       </ion-thumbnail>
       <p text-wrap class="post-title-text" [innerHTML]="post.title"></p>
       <!--<p text-nowrap [innerHTML]="post.excerpt.rendered"></p>-->
-      <button ion-button clear item-end class="forward-icon" (click)="itemTapped(post, $event)">
+      <button ion-button clear item-end class="forward-button" (click)="itemTapped(post)">
         <ion-icon name="arrow-dropright-circle"></ion-icon>
       </button>
     </ion-item>
 
     <ion-item class="load-more-item" *ngIf="posts.length==perPage && !busyList"> 
         <p class="load-more-text">Load more posts</p>
-        <p class="load-more-icon" (click)="getNextPosts()">
-          <ion-icon name="arrow-dropdown-circle"></ion-icon>
-        </p>
+        <div class="load-more-div">
+          <button ion-button clear class="load-more-button" (click)="getNextPosts()">
+            <ion-icon name="arrow-dropdown-circle"></ion-icon>
+          </button>
+        </div>
     </ion-item>
 
   </ion-list>
