@@ -37,7 +37,7 @@
 
   <ion-list>
 
-    <ion-item *ngFor="let post of posts" (click)="itemTapped(post, $event)">
+    <ion-item *ngFor="let post of posts">
       <ion-thumbnail item-start class="custom-thumbnail">
         <div class="crop-div">
           <img src={{post.picture}} class="customized-image">
@@ -45,14 +45,16 @@
       </ion-thumbnail>
       <p text-wrap class="post-title-text" [innerHTML]="post.title"></p>
       <!--<p text-nowrap [innerHTML]="post.excerpt.rendered"></p>-->
-      <div item-end class="forward-icon"><ion-icon name="arrow-dropright-circle"></ion-icon></div>
+      <button ion-button clear item-end class="forward-icon" (click)="itemTapped(post, $event)">
+        <ion-icon name="arrow-dropright-circle"></ion-icon>
+      </button>
     </ion-item>
 
     <ion-item class="load-more-item" *ngIf="posts.length==perPage && !busyList"> 
-      <div>
         <p class="load-more-text">Load more posts</p>
-        <p class="load-more-icon" (click)="getNextPosts()"><ion-icon name="arrow-dropdown-circle"></ion-icon></p>
-      </div>
+        <p class="load-more-icon" (click)="getNextPosts()">
+          <ion-icon name="arrow-dropdown-circle"></ion-icon>
+        </p>
     </ion-item>
 
   </ion-list>
