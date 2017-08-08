@@ -11,7 +11,8 @@ page-home {
         margin: 3px 0px 3px 0px !important;
     }
 
-    .spinner-container {
+    .spinner-container { // total height is height + 2 * margin = 96px, same as pullMin of ionRefresher
+        height: 92px;
         width: 100%;
         text-align: center;
         margin: 2px;
@@ -95,22 +96,5 @@ page-home {
     .input-wrapper{ // is the div around the list item text
         padding: 10px 0px !important;
     }
-
-    /*.inAppBrowserWrap{
-        background-color: color($colors, primary);
-        color: color($colors, primary);
-    }
-
-    .inAppBrowserWrap menu li {
-        font-size: 25px;
-        height: 25px;
-        float: left;
-        margin: 0 10px;
-        padding: 3px 10px;
-        text-decoration: none;
-        color: red;
-        display: block;
-        background: white;
-    }*/
 
 }
