@@ -92,8 +92,8 @@ export class HomePage {
   } 
 
   getNextPosts(){
-    this.page += 1;
     this.content.scrollToTop();
+    this.page += 1;
     this.getPosts();
   }
 
@@ -113,7 +113,7 @@ export class HomePage {
     this.getPosts();
   }*/
 
-  itemTapped(post) { //delete class ct-top-entry from id masthead
+  itemTapped(post, event) { //delete class ct-top-entry from id masthead
   /*let passedPost = new Contact(contact)
   this.navCtrl.push(NetworkDetailsPage, {
                     contact: passedContact
@@ -121,7 +121,11 @@ export class HomePage {
     if(this.busyList){
       return
     }
+    //let clicked = event.currentTarget;
     console.log("getting that post: " + post.link);
+    //console.log(clicked);
+    //clicked.setAttribute("style", "background-color: lightgrey;");
+    //setTimeout( () => {clicked.setAttribute("style", "background-color: white;")}, 200);
     let browser = this.inAppBrowser.create(post.link, "_blank", 
                 "location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=no");
     /*browser.on('loadstop').subscribe( () => { browser.insertCSS( { code: ".ct-top-entry, .row{display:none !important;}" } ) },
