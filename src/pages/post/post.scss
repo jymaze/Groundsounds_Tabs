@@ -41,16 +41,19 @@ page-post {
 
     ion-content{
         img{
-       padding: 30px 0px 30px 0px !important;
+       margin: 30px 0px 30px 0px !important;
        width: 100% !important;
-       height: auto !important; 
+       height: auto !important;
+       border-width: 0px !important;
         }
     }
 
     iframe{
-       padding: 30px 0px 25px 0px !important;
+       margin: 30px 0px 30px 0px !important;
        width: 100% !important;
-       height: auto !important; 
+       height: auto !important;
+       border-width: 1px;
+       border-color: color($colors, primary);
     }
 
     button{

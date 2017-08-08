@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { SecurityContext } from '@angular/core';
 
 import { WpApiService } from '../../providers/wp-api'
@@ -13,7 +13,8 @@ import { Post } from '../../models/post';
 })
 export class PostPage {
 
-  content: any;
+  rawContent: string;
+  safeContent: SafeHtml;
   title: string;
 
   public post: Post;
@@ -24,10 +25,18 @@ export class PostPage {
 
   displayPost(){
     let received = this.navParams.get("post");
-    console.log(received);
+    //console.log(received);
     this.post = received;
-    this.content = this.sanitizer.bypassSecurityTrustHtml(this.post.content);
+    this.rawContent = this.post.content;
+    this.disableSoundCloudLike();
+    this.safeContent = this.sanitizer.bypassSecurityTrustHtml(this.rawContent);
     this.title = this.post.title;
+  }
+
+  disableSoundCloudLike(){
+    console.log("before: " + this.rawContent);
+    this.rawContent = this.rawContent.replace(/(auto_play=false)/, "$1" + "&amp;liking=false&amp;buying=false&amp;sharing=false&amp;download=false");
+    console.log("after: " + this.rawContent);
   }
 
 }
