@@ -31,20 +31,36 @@ export class PostPage {
 
   displayPost(){
     let received = this.navParams.get("post");
-    //console.log(received);
     this.post = received;
     this.rawContent = this.post.content;
+    console.log("raw: " + this.rawContent);
+    if( this.rawContent.match(/soundcloud.com/) ){
     this.disableSoundCloudButtons();
-    this.linksToInAppBrowser();
+    };
+    if( this.rawContent.match(/bandcamp.com/) ){
+      this.disableBandCampButtons();
+    ;}
+    //this.linksToInAppBrowser();
+    console.log("not sanitized: " + this.rawContent);
     this.safeContent = this.sanitizer.bypassSecurityTrustHtml(this.rawContent);
     //this.safeContent = this.sanitizer.sanitize(SecurityContext.NONE, this.rawContent);
-    console.log(this.safeContent);
+    console.log("sanitized: " + this.safeContent);
     this.title = this.post.title;
   }
 
   disableSoundCloudButtons(){ // add parameters to soundcloud widget to hide buttons buy/share/like/download
-    //console.log("before: " + this.rawContent);
-    this.rawContent = this.rawContent.replace(/(auto_play=false)/g, "$1"+"&amp;liking=false&amp;buying=false&amp;sharing=false&amp;download=false");
+    console.log("cleaning soundcloud widget");
+    this.rawContent = this.rawContent.replace(/(auto_play=(?:false|true))/g, "$1"+"&amp;liking=false&amp;buying=false&amp;sharing=false&amp;download=false");
+    //console.log("after: " + this.rawContent);
+  }
+
+  disableBandCampButtons(){ // add parameters to soundcloud widget to hide buttons buy/share/like/download
+    console.log("cleaning bandcamp widget");
+    this.rawContent = this.rawContent.replace(/\/size=large\//g, "/size=small/");
+    this.rawContent = this.rawContent.replace(/width: \d+%;\s+height: \d+px;/g, "width: 100%; height: 42px;");
+    this.rawContent = this.rawContent.replace(/width="\d+"\s+height="\d+"/g, "");
+    this.rawContent = this.rawContent.replace(/seamless=""/g, "seamless");
+    this.rawContent = this.rawContent.replace(/artwork=small/g, "");
     //console.log("after: " + this.rawContent);
   }
 
