@@ -25,7 +25,8 @@ export class HomePage {
 
   public perPage: number = 20; // Important!
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController, private wp: WpApiService, private inAppBrowser: InAppBrowser) {
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController, 
+                              private wp: WpApiService, private IAB: InAppBrowser) {
 
   }
   
