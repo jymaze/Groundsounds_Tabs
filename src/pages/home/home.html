@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar padding>
+  <ion-navbar>
     <!--<ion-buttons start>
       <button ion-button icon-only (click)="backToTop()">
         <ion-icon name="refresh"></ion-icon>
@@ -45,7 +45,7 @@
       </ion-thumbnail>
       <p text-wrap class="post-title-text" [innerHTML]="post.title"></p>
       <!--<p text-nowrap [innerHTML]="post.excerpt.rendered"></p>-->
-      <button ion-button clear item-end class="forward-button" (click)="itemTapped(post)">
+      <button ion-button tappable clear item-end class="forward-button" (click)="itemTapped(post)">
         <ion-icon name="arrow-dropright-circle"></ion-icon>
       </button>
     </ion-item>

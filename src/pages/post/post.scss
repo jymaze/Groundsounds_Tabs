@@ -1,77 +1,78 @@
 page-post {
 
-    .toolbar-title{
-        height: 44px;
-        width: 100%;
-    }
+    ion-header{
+        .toolbar-title{
+            height: 44px;
+            width: 100%;
+        }
 
-    .logo{
-        height: 38px !important;
-        width: 181px !important;
-        margin: 3px 0px 3px 0px !important;
-    }
-
-    .title-container{
-        padding: 25px 0px 25px 0px !important;
-        border-bottom-width: 3px !important;
-        border-top-width: 3px !important;
-        border-color: color($colors, primary) !important;
-        text-align: center !important;
-        color: color($colors, dark) !important;
-        font-weight: bold !important;
-    }
-
-    hr{
-        height: 1px;
-        border-bottom-width: 1px !important;
-        border-bottom-color: red;
-        color: transparent;
-    }
-
-    a{
-        color: teal !important;
-    }
-
-    p{
-        text-align: justify !important;
-        font-size: 16px;
-        line-height: 1.3em;
-        color: color($colors, dark) !important;
-    }
-
-    ion-content{
-        img{
-       margin: 30px 0px 30px 0px !important;
-       width: 100% !important;
-       height: auto !important;
-       border-width: 0px !important;
+        .logo{
+            height: 38px !important;
+            width: 181px !important;
+            margin: 3px 0px 3px 0px !important;
         }
     }
 
-    iframe{
-       margin: 30px 0px 30px 0px !important;
-       width: 100% !important;
-       height: auto !important;
-       border-width: 1px;
-       border-color: color($colors, primary);
-    }
+    ion-content{
+        .title-container{
+            padding: 25px 0px 25px 0px !important;
+            border-bottom-width: 3px !important;
+            border-top-width: 3px !important;
+            border-color: color($colors, primary) !important;
+            text-align: center !important;
+            color: color($colors, dark) !important;
+            font-weight: bold !important;
+        }
 
-    button{
-        font-size: 16px !important;
-    }
+        hr{
+            height: 1px;
+            border-bottom-width: 1px !important;
+            border-bottom-color: red;
+            color: transparent;
+        }
 
-    .relatedthumb{
-        margin-left: auto !important;
-        margin-right: auto !important;
-        float: none !important;
-    }
+        a .pseudo-link{
+            color: teal !important;
+        }
 
-    .yuzo__title{
-        text-align: center;
-    }
+        p{
+            text-align: justify !important;
+            font-size: 16px;
+            line-height: 1.3em;
+            color: color($colors, dark) !important;
+        }
 
-    .yuzo_related_post{
-        display: none !important;
+        img{
+            margin: 30px 0px 30px 0px !important;
+            width: 100% !important;
+            height: auto !important;
+            border-width: 0px !important;
+        }
+
+        iframe{
+            margin: 30px 0px 30px 0px !important;
+            width: 100% !important;
+            height: auto !important;
+            border-width: 1px;
+            border-color: color($colors, primary);
+        }
+
+        button{
+            font-size: 16px !important;
+        }
+
+        .relatedthumb{
+            margin-left: auto !important;
+            margin-right: auto !important;
+            float: none !important;
+        }
+
+        .yuzo__title{
+            text-align: center;
+        }
+
+        .yuzo_related_post{
+            display: none !important;
+        }
     }
-    
 }

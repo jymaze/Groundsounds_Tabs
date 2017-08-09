@@ -21,7 +21,7 @@ export class PostPage {
   public post: Post;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-              private wp: WpApiService, private sanitizer: DomSanitizer, private IAB: InAppBrowser) {
+              private wp: WpApiService, private sanitizer: DomSanitizer, private iab: InAppBrowser) {
 
   }
 
@@ -37,6 +37,8 @@ export class PostPage {
     this.disableSoundCloudButtons();
     this.linksToInAppBrowser();
     this.safeContent = this.sanitizer.bypassSecurityTrustHtml(this.rawContent);
+    //this.safeContent = this.sanitizer.sanitize(SecurityContext.NONE, this.rawContent);
+    console.log(this.safeContent);
     this.title = this.post.title;
   }
 
@@ -47,18 +49,20 @@ export class PostPage {
   }
 
   linksToInAppBrowser(){
-    console.log("before: " + this.rawContent); // grab links and transform then into Angular 2 click event for InAppBrowser processing
+    let iabOptions: string = "'location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=no,noopener=yes'";
+    //console.log("before: " + this.rawContent); // grab links and transform then into Angular 2 click event for InAppBrowser processing
     //this.rawContent = this.rawContent.replace(/href=("\S+")/g, "(click)=\'openWithInAppBrowser($1)\'");
-    this.rawContent = this.rawContent.replace(/href="(\S+)"/g, "onClick=\"window.open('$1', '_blank')\"");
-    this.rawContent = this.rawContent.replace(/target=[\"\']_blank[\"\']/g, "");
-    this.rawContent = this.rawContent.replace(/rel="\S+?"/g, "");
-    //this.rawContent = this.rawContent.replace(/<\/a> /, "</span>");    
-    console.log("after: " + this.rawContent);
+    this.rawContent = this.rawContent.replace( /href="(\S+)"/g, "onClick=\"window.open('$1', '_blank', " + iabOptions + ")\"" );
+    this.rawContent = this.rawContent.replace( /target=[\"\']_blank[\"\']/g, "" );
+    this.rawContent = this.rawContent.replace( /rel="\S+?"/g, "" );
+    //this.rawContent = this.rawContent.replace(/<a /g, "<div class=\"pseudo-link\"");
+    //this.rawContent = this.rawContent.replace(/<\/a> /g, "</div>");    
+    //console.log("after: " + this.rawContent);
   }
 
   openWithInAppBrowser(link: string){
     console.log("IAB called");
-    let browser = this.IAB.create(link, "_blank", "location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=no");
+    let browser = this.iab.create(link, "_blank", "location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=no");
   }
 
   test(){
