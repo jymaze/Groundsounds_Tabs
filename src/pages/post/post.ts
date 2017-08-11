@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { LoadingController } from 'ionic-angular';
 
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { SecurityContext } from '@angular/core';
@@ -14,6 +15,8 @@ import { Post } from '../../models/post';
 })
 export class PostPage {
 
+  loader: any;
+
   rawContent: string;
   safeContent: SafeHtml;
   title: string;
@@ -23,14 +26,24 @@ export class PostPage {
 
   public post: Post;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController,
               private wp: WpApiService, private sanitizer: DomSanitizer, private iab: InAppBrowser) {
 
   }
 
   ionViewWillEnter(){
+    this.presentLoading();
     this.displayPost();
     this.getAuthor();
+  }
+
+  presentLoading() {
+    this.loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      showBackdrop: true,
+      //duration: 1500
+    });
+    this.loader.present();
   }
 
   displayPost(){
@@ -117,8 +130,9 @@ export class PostPage {
     .subscribe( data => { this.post.setAvatar( data["avatar_urls"]["48"] );
                           this.post.setName( data["name"] );
                           console.log(this.post.name+" : "+this.post.avatar);
-                          this.name = "by" + this.post.name;
+                          this.name = "by " + this.post.name;
                           this.avatar = this.post.avatar;
+                          this.loader.dismiss();
     });
   }
 

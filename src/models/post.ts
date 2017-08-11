@@ -6,7 +6,7 @@ export class Post {
   title: string;
   content: string;
   author: number; //author #
-  name: string = "#"; //author name
+  name: string = " "; //author name
   avatar: string = "assets/img/default_avatar.png"; //author picture, with placeholder
   media: number; //media #
   picture: string = "assets/img/placeholder.png"; //link to picture, retrieved from media page, placeholder while loading
