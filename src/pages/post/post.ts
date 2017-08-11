@@ -50,7 +50,7 @@ export class PostPage {
     //this.safeContent = this.sanitizer.sanitize(SecurityContext.NONE, this.rawContent);
     //console.log("sanitized: " + this.safeContent);
     this.title = this.post.title;
-    this.name = "by" + this.post.name;
+    this.name = this.post.name;
     console.log(this.name);
     this.avatar = this.post.avatar;
     console.log(this.avatar);   
@@ -117,7 +117,7 @@ export class PostPage {
     .subscribe( data => { this.post.setAvatar( data["avatar_urls"]["48"] );
                           this.post.setName( data["name"] );
                           console.log(this.post.name+" : "+this.post.avatar);
-                          this.name = this.post.name;
+                          this.name = "by" + this.post.name;
                           this.avatar = this.post.avatar;
     });
   }
