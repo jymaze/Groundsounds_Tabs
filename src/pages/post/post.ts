@@ -16,6 +16,7 @@ import { Post } from '../../models/post';
 export class PostPage {
 
   loader: any;
+  loaded: boolean = false;
 
   rawContent: string;
   safeContent: SafeHtml;
@@ -50,7 +51,7 @@ export class PostPage {
     let received = this.navParams.get("post");
     this.post = received;
     this.rawContent = this.post.content;
-    console.log("raw: " + this.rawContent);
+    //console.log("raw: " + this.rawContent);
     if( this.rawContent.match(/soundcloud.com/) ){
     this.disableSoundCloudButtons();
     };
@@ -64,19 +65,19 @@ export class PostPage {
     //console.log("sanitized: " + this.safeContent);
     this.title = this.post.title;
     this.name = this.post.name;
-    console.log(this.name);
+    //console.log(this.name);
     this.avatar = this.post.avatar;
-    console.log(this.avatar);   
+    //console.log(this.avatar);   
   }
 
   disableSoundCloudButtons(){ // add parameters to soundcloud widget to hide buttons buy/share/like/download
-    console.log("cleaning soundcloud widget");
+    //console.log("cleaning soundcloud widget");
     this.rawContent = this.rawContent.replace(/(auto_play=(?:false|true))/g, "$1"+"&amp;liking=false&amp;buying=false&amp;sharing=false&amp;download=false");
     //console.log("after: " + this.rawContent);
   }
 
   disableBandCampButtons(){ // add parameters to soundcloud widget to hide buttons buy/share/like/download
-    console.log("cleaning bandcamp widget");
+    //console.log("cleaning bandcamp widget");
     this.rawContent = this.rawContent.replace(/\/size=large\//g, "/size=small/");
     this.rawContent = this.rawContent.replace(/width: \d+%;\s+height: \d+px;/g, "width: 100%; height: 42px;");
     this.rawContent = this.rawContent.replace(/width="\d+"\s+height="\d+"/g, "");
@@ -108,7 +109,7 @@ export class PostPage {
     for(let i=0; i<links.length; i++){
       let link = links[i];
       let href = link.href;
-      console.log("processing link: " + href);
+      //console.log("processing link: " + href);
       link.onclick = function(e: MouseEvent, targetUrl=href){
         e.preventDefault();
         //let targetUrl = e.currentTarget.getAttribute("href");
@@ -118,20 +119,21 @@ export class PostPage {
   }
 
   openWithInAppBrowser(link: string){
-    console.log("IAB called");
+    //console.log("IAB called");
     let browser = this.iab.create(link, "_blank", "location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=no");
   }
 
   getAuthor(){
-    console.log(this.post.avatar);
-    console.log(this.post.name);
-    console.log("getting author");
+    //console.log(this.post.avatar);
+    //console.log(this.post.name);
+    //console.log("getting author");
     this.wp.getAuthor(this.post.author)
     .subscribe( data => { this.post.setAvatar( data["avatar_urls"]["48"] );
                           this.post.setName( data["name"] );
-                          console.log(this.post.name+" : "+this.post.avatar);
+                          //console.log(this.post.name+" : "+this.post.avatar);
                           this.name = "by " + this.post.name;
                           this.avatar = this.post.avatar;
+                          this.loaded = true;
                           this.loader.dismiss();
     });
   }

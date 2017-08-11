@@ -8,10 +8,9 @@
 
 <ion-content padding>
 
+  <div *ngIf="loaded==true">
 
-  <!--<ion-card>
-
-    <ion-card-content>-->
+    <!--<ion-card-content>-->
 
       <div class="title-container">
         <h1 [innerHTML]= "title"></h1>
@@ -49,6 +48,6 @@
       </ion-col>
     </ion-row>
 
-  <!--</ion-card>-->
+  </div>
 
 </ion-content>

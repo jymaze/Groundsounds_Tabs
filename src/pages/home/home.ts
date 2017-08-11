@@ -31,13 +31,13 @@ export class HomePage {
   }
   
   ionViewDidLoad(){
-    console.log('page will enter')
+    //console.log('page will enter')
     this.getPosts();
   }
 
 
   jsonToObjects(posts: any){
-    console.log("jsonToPosts was called");
+    //console.log("jsonToPosts was called");
     let ret: any = [];
     for(let i=0; i<posts.length; i++){
       //console.log(i);
@@ -54,14 +54,14 @@ export class HomePage {
 
   getPosts(){
     this.busyList = true;
-    console.log('getting page ' + this.page)
+    //console.log('getting page ' + this.page)
     this.wp.getPosts(this.page, this.perPage).subscribe( data => { this.busyList = false;
                                                      this.posts = this.jsonToObjects(data); 
                                                      this.content.scrollToTop();
                                                      this.getPicLinksByRegex();
                                                    },
                                            err => {this.busyList = false; this.showAlert()},
-                                           () => console.log('getPosts completed') );
+                                           /*() => console.log('getPosts completed')*/ );
   }
 
   /*getPicLinksByApi(){
@@ -73,7 +73,7 @@ export class HomePage {
   }*/
 
   getPicLinksByRegex(){
-    console.log("getting pics by Regex");
+    //console.log("getting pics by Regex");
     for (let i=0; i<this.posts.length; i++){
       // match any src address ending with picture extension
       let picLink = this.posts[i].content.match(/src="(\S+\.(?:jpg|jpeg|gif|png))"/);
@@ -81,13 +81,13 @@ export class HomePage {
         this.posts[i].setPicture(picLink[1]);
       }
       else{ // if fail, try with href
-        console.log("had to try href");
+        //console.log("had to try href");
         let picLinkAlt = this.posts[i].content.match(/href="(\S+\.(?:jpg|jpeg|gif|png))"/);
         if(picLinkAlt){
           this.posts[i].setPicture(picLinkAlt[1]);
         }
         else{// fallback on querying the api for media if no picture found (if only video in post)
-          console.log("fallback on api");
+          //console.log("fallback on api");
           this.wp.getPictureLink(this.posts[i].media)
              .subscribe( data => { this.posts[i].setPicture( data["guid"]["rendered"]); } );
         }
@@ -103,12 +103,12 @@ export class HomePage {
 
   refreshPosts(refresher){
     this.page = 1;
-    console.log('getting page ' + this.page)
+    //console.log('getting page ' + this.page)
     this.wp.getPosts(this.page, this.perPage).subscribe(data => { this.posts = this.jsonToObjects(data);
                                                     this.getPicLinksByRegex(); 
                                                   },
                                            err => {refresher.complete(); this.showAlert()},
-                                           () => {console.log('refreshPosts completed'); refresher.complete();}
+                                           () => {/*console.log('refreshPosts completed');*/ refresher.complete();}
                                 );
   }
 
@@ -121,7 +121,7 @@ export class HomePage {
     if(this.busyList){
       return
     }
-    console.log("opening that post: " + post.link);
+    //console.log("opening that post: " + post.link);
 
     this.navCtrl.push(PostPage, {
                     post: post
