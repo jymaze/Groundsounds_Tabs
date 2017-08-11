@@ -24,12 +24,20 @@ page-post {
             font-weight: bold !important;
         }
 
-        hr{
+        .author-item{
+            height: 52px;
+        }
+
+        .item-inner{
+            border-bottom-color: red !important;
+        }
+
+        /*hr{
             height: 1px;
             border-bottom-width: 1px !important;
             border-bottom-color: red;
             color: transparent;
-        }
+        }*/
 
         a .pseudo-link{
             color: teal !important;

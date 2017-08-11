@@ -49,21 +49,29 @@ export class WpApiService {
 
     //this.posts = null;
 
-    let url = this.url + "posts?page=" + String(page) + "&per_page="+
+    let target = this.url + "posts?page=" + String(page) + "&per_page="+
              String(perPage) +"&" + String(Date.now()); // url with page number and ajax timestamp to avoid caching
     
-    let postsJSON = this.http.get( url ).retry(5)
+    let postsJSON = this.http.get( target ).retry(5)
                          .map(res => res.json()); // return observable cast to array of objects
     return postsJSON;
 
   }
 
   getPictureLink(media: number){
-    let url = this.url + "media/" + String(media);
+    let target = this.url + "media/" + String(media);
 
-    let mediaJSON = this.http.get( url ).retry(5)
+    let mediaJSON = this.http.get( target ).retry(5)
                            .map(res => res.json());
     return mediaJSON;
+  }
+
+  getAuthor(author: number){
+    let target = this.url + "users/" + String(author);
+    console.log(target);
+    let authorJSON = this.http.get( target ).retry(5)
+                           .map(res => res.json());
+    return authorJSON;
   }
 
 }

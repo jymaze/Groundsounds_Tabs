@@ -44,7 +44,8 @@ export class HomePage {
       let item = posts[i];
       //console.log("item looked at");
       //console.log(item);
-      ret.push( new Post(item.id, item.date, item.link, item.title.rendered, item.content.rendered, item.featured_media) );
+      ret.push( new Post(item.id, item.date, item.link, item.title.rendered, 
+                            item.content.rendered, item.featured_media, item.author) );
     };
     //console.log(ret[0]);
     return (ret);

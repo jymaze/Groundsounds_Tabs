@@ -18,6 +18,9 @@ export class PostPage {
   safeContent: SafeHtml;
   title: string;
 
+  name: string;
+  avatar: string;
+
   public post: Post;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
@@ -25,8 +28,9 @@ export class PostPage {
 
   }
 
-  ionViewDidLoad(){
+  ionViewWillEnter(){
     this.displayPost();
+    this.getAuthor();
   }
 
   displayPost(){
@@ -40,12 +44,16 @@ export class PostPage {
     if( this.rawContent.match(/bandcamp.com/) ){
       this.disableBandCampButtons();
     ;}
-    //this.linksToInAppBrowser();
-    console.log("not sanitized: " + this.rawContent);
+    this.linksToInAppBrowser();
+    //console.log("not sanitized: " + this.rawContent);
     this.safeContent = this.sanitizer.bypassSecurityTrustHtml(this.rawContent);
     //this.safeContent = this.sanitizer.sanitize(SecurityContext.NONE, this.rawContent);
-    console.log("sanitized: " + this.safeContent);
+    //console.log("sanitized: " + this.safeContent);
     this.title = this.post.title;
+    this.name = "by" + this.post.name;
+    console.log(this.name);
+    this.avatar = this.post.avatar;
+    console.log(this.avatar);   
   }
 
   disableSoundCloudButtons(){ // add parameters to soundcloud widget to hide buttons buy/share/like/download
@@ -64,11 +72,16 @@ export class PostPage {
     //console.log("after: " + this.rawContent);
   }
 
+  disableLiveMixTapes(){
+    this.rawContent = this.rawContent.replace(/width="\d+"\s+height="\d+"/g, "");
+    this.rawContent = this.rawContent.replace( /scrolling="no"/g, 'scrolling="no" sharing="no"' ); //livemixtapes
+  }
+
   linksToInAppBrowser(){
     let iabOptions: string = "'location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=no,noopener=yes'";
     //console.log("before: " + this.rawContent); // grab links and transform then into Angular 2 click event for InAppBrowser processing
     //this.rawContent = this.rawContent.replace(/href=("\S+")/g, "(click)=\'openWithInAppBrowser($1)\'");
-    this.rawContent = this.rawContent.replace( /href="(\S+)"/g, "onClick=\"window.open('$1', '_blank', " + iabOptions + ")\"" );
+    this.rawContent = this.rawContent.replace( /href="(\S+?)"/g, "onClick=\"window.open('$1', '_blank', " + iabOptions + ")\"" );
     this.rawContent = this.rawContent.replace( /target=[\"\']_blank[\"\']/g, "" );
     this.rawContent = this.rawContent.replace( /rel="\S+?"/g, "" );
     //this.rawContent = this.rawContent.replace(/<a /g, "<div class=\"pseudo-link\"");
@@ -76,10 +89,39 @@ export class PostPage {
     //console.log("after: " + this.rawContent);
   }
 
+  linksToInAppBrowserByQuery(){
+    let iabOptions: string = "'location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=no,noopener=yes'";
+    let links = document.querySelectorAll("a");
+    for(let i=0; i<links.length; i++){
+      let link = links[i];
+      let href = link.href;
+      console.log("processing link: " + href);
+      link.onclick = function(e: MouseEvent, targetUrl=href){
+        e.preventDefault();
+        //let targetUrl = e.currentTarget.getAttribute("href");
+        window.open(targetUrl, "_blank", iabOptions);
+      }
+    }
+  }
+
   openWithInAppBrowser(link: string){
     console.log("IAB called");
     let browser = this.iab.create(link, "_blank", "location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=no");
   }
+
+  getAuthor(){
+    console.log(this.post.avatar);
+    console.log(this.post.name);
+    console.log("getting author");
+    this.wp.getAuthor(this.post.author)
+    .subscribe( data => { this.post.setAvatar( data["avatar_urls"]["48"] );
+                          this.post.setName( data["name"] );
+                          console.log(this.post.name+" : "+this.post.avatar);
+                          this.name = this.post.name;
+                          this.avatar = this.post.avatar;
+    });
+  }
+
 
   test(){
     console.log("clicked");

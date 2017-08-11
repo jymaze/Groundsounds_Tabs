@@ -17,7 +17,12 @@
         <h1 [innerHTML]= "title"></h1>
       </div>
 
-      <hr>
+      <ion-item class="author-item">
+          <ion-avatar item-start>
+            <img src={{avatar}}>
+          </ion-avatar>
+          <h2 [innerHTML]="name"></h2>
+      </ion-item>
 
       <div [innerHTML]="safeContent"></div>
 
