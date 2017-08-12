@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, ViewController, PopoverController } from 'ionic-angular';
 
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { SecurityContext } from '@angular/core';
@@ -18,6 +18,8 @@ export class PostPage {
   loader: any;
   loaded: boolean = false;
 
+  iframePresent: boolean = true;
+
   rawContent: string;
   safeContent: SafeHtml;
   title: string;
@@ -28,7 +30,8 @@ export class PostPage {
   public post: Post;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController,
-              private wp: WpApiService, private sanitizer: DomSanitizer, private iab: InAppBrowser) {
+              private wp: WpApiService, private sanitizer: DomSanitizer, private iab: InAppBrowser, 
+              private pop: PopoverController) {
 
   }
 
@@ -79,7 +82,7 @@ export class PostPage {
   disableBandCampButtons(){ // add parameters to soundcloud widget to hide buttons buy/share/like/download
     //console.log("cleaning bandcamp widget");
     this.rawContent = this.rawContent.replace(/\/size=large\//g, "/size=small/");
-    this.rawContent = this.rawContent.replace(/width: \d+%;\s+height: \d+px;/g, "width: 100%; height: 42px;");
+    this.rawContent = this.rawContent.replace(/width: \d+(?:%|px);\s+height: \d+(?:%|px);/g, "width: 100%; height: 42px;");
     this.rawContent = this.rawContent.replace(/width="\d+"\s+height="\d+"/g, "");
     this.rawContent = this.rawContent.replace(/seamless=""/g, "seamless");
     this.rawContent = this.rawContent.replace(/artwork=small/g, "");
@@ -138,9 +141,34 @@ export class PostPage {
     });
   }
 
-
   test(){
     console.log("clicked");
   }
 
+  presentPopover(myEvent) {
+    let popover = this.pop.create(PopoverPage);
+    popover.present({
+      ev: myEvent
+    });
+  }
+
+}
+
+@Component({
+  template: `
+    <ion-list>
+      <ion-list-header>Ionic</ion-list-header>
+      <button ion-item (click)="close()">Learn Ionic</button>
+      <button ion-item (click)="close()">Documentation</button>
+      <button ion-item (click)="close()">Showcase</button>
+      <button ion-item (click)="close()">GitHub Repo</button>
+    </ion-list>
+  `
+})
+class PopoverPage {
+  constructor(public viewCtrl: ViewController) {}
+
+  close() {
+    this.viewCtrl.dismiss();
+  }
 }

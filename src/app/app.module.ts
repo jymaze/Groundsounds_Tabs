@@ -6,8 +6,10 @@ import { MyApp } from './app.component';
 import { SearchPage } from '../pages/search/search';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
+import { PlayPage } from '../pages/play/play';
 import { PostPage } from '../pages/post/post';
 import { TabsPage } from '../pages/tabs/tabs';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -23,6 +25,7 @@ import { InAppBrowser } from "@ionic-native/in-app-browser";
     SearchPage,
     ContactPage,
     HomePage,
+    PlayPage,
     PostPage,
     TabsPage
   ],
@@ -37,6 +40,7 @@ import { InAppBrowser } from "@ionic-native/in-app-browser";
     SearchPage,
     ContactPage,
     HomePage,
+    PlayPage,
     PostPage,
     TabsPage
   ],

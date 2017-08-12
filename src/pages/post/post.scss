@@ -64,6 +64,7 @@ page-post {
             height: auto !important;
             border-width: 1px;
             border-color: color($colors, primary);
+            overflow: hidden !important;
         }
 
         button{
@@ -82,6 +83,15 @@ page-post {
 
         .yuzo_related_post{
             display: none !important;
+        }
+
+        .play-button-container{
+            text-align: center;
+            margin: 50px 0px 50px 0px !important;
+        }
+
+        .play-button{
+            width: 40%;
         }
     }
 }

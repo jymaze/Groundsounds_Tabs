@@ -10,8 +10,6 @@
 
   <div *ngIf="loaded==true">
 
-    <!--<ion-card-content>-->
-
       <div class="title-container">
         <h1 [innerHTML]= "title"></h1>
       </div>
@@ -25,7 +23,11 @@
 
       <div [innerHTML]="safeContent"></div>
 
-    <!--</ion-card-content>-->
+    <div *ngIf="iframePresent" class="play-button-container">
+      <button class="play-button" ion-button large strong color="primary" (click)="presentPopover()">
+      PLAY &#9654; <!--unicode play symbol (right-pointing arrow)-->
+      </button>
+    </div>
 
     <ion-row class="fav-share" no-padding>
       <ion-col>
