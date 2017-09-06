@@ -24,7 +24,7 @@
       <div [innerHTML]="safeContent"></div>
 
     <div *ngIf="iframePresent" class="play-button-container">
-      <button class="play-button" ion-button large strong color="primary" (click)="presentPopover()">
+      <button class="play-button" ion-button large strong color="primary" (click)="getIframes()">
       PLAY &#9654; <!--unicode play symbol (right-pointing arrow)-->
       </button>
     </div>

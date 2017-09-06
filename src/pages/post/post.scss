@@ -44,12 +44,12 @@ page-post {
             color: teal !important;
         }
 
-        p{
+        p, span{
             text-align: justify !important;
-            font-size: 16px;
+            font-size: 16px !important;
             line-height: 1.3em;
-            color: color($colors, dark) !important;
-        }
+            //color: color($colors, dark);
+       }
 
         img{
             margin: 30px 0px 30px 0px !important;

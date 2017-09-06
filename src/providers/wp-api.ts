@@ -68,7 +68,7 @@ export class WpApiService {
 
   getAuthor(author: number){
     let target = this.url + "users/" + String(author);
-    console.log(target);
+    //console.log(target);
     let authorJSON = this.http.get( target ).retry(5)
                            .map(res => res.json());
     return authorJSON;

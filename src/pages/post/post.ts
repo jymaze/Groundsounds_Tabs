@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { LoadingController, ViewController, PopoverController } from 'ionic-angular';
+import { LoadingController, ViewController, ModalController } from 'ionic-angular';
 
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { SecurityContext } from '@angular/core';
@@ -8,6 +8,7 @@ import { SecurityContext } from '@angular/core';
 import { WpApiService } from '../../providers/wp-api'
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Post } from '../../models/post';
+import { MediaPage } from './../media/media';
 
 @Component({
   selector: 'page-post',
@@ -19,6 +20,7 @@ export class PostPage {
   loaded: boolean = false;
 
   iframePresent: boolean = true;
+  iframes: any = [];
 
   rawContent: string;
   safeContent: SafeHtml;
@@ -31,7 +33,7 @@ export class PostPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController,
               private wp: WpApiService, private sanitizer: DomSanitizer, private iab: InAppBrowser, 
-              private pop: PopoverController) {
+              private modal: ModalController) {
 
   }
 
@@ -56,9 +58,11 @@ export class PostPage {
     this.rawContent = this.post.content;
     //console.log("raw: " + this.rawContent);
     if( this.rawContent.match(/soundcloud.com/) ){
-    this.disableSoundCloudButtons();
+      console.log("soudcloud link detected");
+      this.disableSoundCloudButtons();
     };
     if( this.rawContent.match(/bandcamp.com/) ){
+      console.log("bandcamp link detected");
       this.disableBandCampButtons();
     ;}
     this.linksToInAppBrowser();
@@ -71,6 +75,16 @@ export class PostPage {
     //console.log(this.name);
     this.avatar = this.post.avatar;
     //console.log(this.avatar);   
+  }
+
+  getIframes(){
+    this.iframes = this.rawContent.match(/<\s?iframe(?:(?!youtube).)+\/iframe\s?>/g);
+    console.log(this.iframes);
+    let test_link = this.iframes[0].match(/"(http.+?)"/)[0];
+    //this.presentModal();
+    //this.iab.create(test_link);
+    //window.open(test_link);
+    console.log(test_link);
   }
 
   disableSoundCloudButtons(){ // add parameters to soundcloud widget to hide buttons buy/share/like/download
@@ -96,9 +110,10 @@ export class PostPage {
 
   linksToInAppBrowser(){
     let iabOptions: string = "'location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=no,noopener=yes'";
+    let winOpenOptions: string = "'location=no'";
     //console.log("before: " + this.rawContent); // grab links and transform then into Angular 2 click event for InAppBrowser processing
     //this.rawContent = this.rawContent.replace(/href=("\S+")/g, "(click)=\'openWithInAppBrowser($1)\'");
-    this.rawContent = this.rawContent.replace( /href="(\S+?)"/g, "onClick=\"window.open('$1', '_blank', " + iabOptions + ")\"" );
+    this.rawContent = this.rawContent.replace( /href="(\S+?)"/g, "onClick=\"window.open('$1', '_blank', " + winOpenOptions + ")\"" );
     this.rawContent = this.rawContent.replace( /target=[\"\']_blank[\"\']/g, "" );
     this.rawContent = this.rawContent.replace( /rel="\S+?"/g, "" );
     //this.rawContent = this.rawContent.replace(/<a /g, "<div class=\"pseudo-link\"");
@@ -137,7 +152,7 @@ export class PostPage {
                           this.name = "by " + this.post.name;
                           this.avatar = this.post.avatar;
                           this.loaded = true;
-                          this.loader.dismiss();
+                          this.loader.dismiss(); //when avatar picture arrived, can presume time to display
     });
   }
 
@@ -145,30 +160,9 @@ export class PostPage {
     console.log("clicked");
   }
 
-  presentPopover(myEvent) {
-    let popover = this.pop.create(PopoverPage);
-    popover.present({
-      ev: myEvent
-    });
+  presentModal() {
+    let mediaModal = this.modal.create(MediaPage, {iframe: this.iframes});
+    mediaModal.present();
   }
 
-}
-
-@Component({
-  template: `
-    <ion-list>
-      <ion-list-header>Ionic</ion-list-header>
-      <button ion-item (click)="close()">Learn Ionic</button>
-      <button ion-item (click)="close()">Documentation</button>
-      <button ion-item (click)="close()">Showcase</button>
-      <button ion-item (click)="close()">GitHub Repo</button>
-    </ion-list>
-  `
-})
-class PopoverPage {
-  constructor(public viewCtrl: ViewController) {}
-
-  close() {
-    this.viewCtrl.dismiss();
-  }
 }
