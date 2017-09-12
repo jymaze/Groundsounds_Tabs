@@ -29,6 +29,9 @@ export class PostPage {
   name: string;
   avatar: string;
 
+  iabOptions: string = "'location=no,toolbarposition=bottom,closebuttoncaption=< Back,suppressesIncrementalRendering=no,noopener=yes'";
+  winOpenOptions: string = "'location=no'";
+
   public post: Post;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController,
@@ -37,9 +40,12 @@ export class PostPage {
 
   }
 
+  ionViewDidLoad(){
+    this.processPost();
+  }
+
   ionViewWillEnter(){
     this.presentLoading();
-    this.displayPost();
     this.getAuthor();
   }
 
@@ -52,20 +58,21 @@ export class PostPage {
     this.loader.present();
   }
 
-  displayPost(){
+  processPost(){
     let received = this.navParams.get("post");
     this.post = received;
     this.rawContent = this.post.content;
     //console.log("raw: " + this.rawContent);
-    if( this.rawContent.match(/soundcloud.com/) ){
+    /*if( this.rawContent.match(/soundcloud.com/) ){
       console.log("soudcloud link detected");
       this.disableSoundCloudButtons();
     };
     if( this.rawContent.match(/bandcamp.com/) ){
       console.log("bandcamp link detected");
       this.disableBandCampButtons();
-    ;}
+    ;}*/
     this.linksToInAppBrowser();
+    this.replaceIframes();
     //console.log("not sanitized: " + this.rawContent);
     this.safeContent = this.sanitizer.bypassSecurityTrustHtml(this.rawContent);
     //this.safeContent = this.sanitizer.sanitize(SecurityContext.NONE, this.rawContent);
@@ -85,6 +92,28 @@ export class PostPage {
     //this.iab.create(test_link);
     //window.open(test_link);
     console.log(test_link);
+  }
+
+  replaceIframes(){
+    this.iframes = this.rawContent.match(/<\s?iframe.+\/iframe\s?>/g);
+    console.log(this.iframes);
+    if(!this.iframes){ //return if this.iframes is null
+      return;
+    }
+    for (let i=0; i<this.iframes.length; i++){
+      let link = this.iframes[i].match(/src="(\S+?)"/)[1]; //captured element is at index 1
+      console.log(link);
+      let site = this.iframes[i].match(/src=".+\.(\S+?)\.com.+"/)[1];
+      site = site.charAt(0).toUpperCase() + site.slice(1);
+      let buttonTemplate=
+      `<div class="play-button-container">
+      <button class="play-button disable-hover button button-ios button-default button-default-ios button-large button-large-ios button-strong button-strong-ios button-ios-primary" color="red">
+      <span class="button-inner" onClick=\"window.open('${link}', '_blank', ${this.iabOptions})\">
+      Play on ${site} ▶ 
+      </span><div class="button-effect"></div></button>
+      </div>`;
+      this.rawContent = this.rawContent.replace(this.iframes[i], buttonTemplate);
+    }
   }
 
   disableSoundCloudButtons(){ // add parameters to soundcloud widget to hide buttons buy/share/like/download
@@ -109,15 +138,12 @@ export class PostPage {
   }
 
   linksToInAppBrowser(){
-    let iabOptions: string = "'location=no,toolbarposition=bottom,closebuttoncaption=Back to GroundSounds,suppressesIncrementalRendering=no,noopener=yes'";
-    let winOpenOptions: string = "'location=no'";
     //console.log("before: " + this.rawContent); // grab links and transform then into Angular 2 click event for InAppBrowser processing
     //this.rawContent = this.rawContent.replace(/href=("\S+")/g, "(click)=\'openWithInAppBrowser($1)\'");
-    this.rawContent = this.rawContent.replace( /href="(\S+?)"/g, "onClick=\"window.open('$1', '_blank', " + winOpenOptions + ")\"" );
+    this.rawContent = this.rawContent.replace( /href="(\S+?)"/g, `onClick=\"window.open('$1', '_blank', ${this.iabOptions} )\"` );
     this.rawContent = this.rawContent.replace( /target=[\"\']_blank[\"\']/g, "" );
     this.rawContent = this.rawContent.replace( /rel="\S+?"/g, "" );
-    //this.rawContent = this.rawContent.replace(/<a /g, "<div class=\"pseudo-link\"");
-    //this.rawContent = this.rawContent.replace(/<\/a> /g, "</div>");    
+    this.rawContent = this.rawContent.replace(/<a.+?>.*?<img/g, "<a onClick=\"\"> <img"); // disable links on images
     //console.log("after: " + this.rawContent);
   }
 

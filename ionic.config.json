@@ -1,5 +1,8 @@
 {
   "name": "Groundsounds_Tabs",
   "app_id": "3b94e710",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }
