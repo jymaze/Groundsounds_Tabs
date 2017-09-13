@@ -29,7 +29,7 @@ export class PostPage {
   name: string;
   avatar: string;
 
-  iabOptions: string = "'location=no,toolbarposition=bottom,closebuttoncaption=< Back,suppressesIncrementalRendering=no,noopener=yes'";
+  iabOptions: string = "'location=no,toolbarposition=top,closebuttoncaption=< Back to App,suppressesIncrementalRendering=no,allowInlineMediaPlayback=yes,presentationstyle=fullscreen'";
   winOpenOptions: string = "'location=no'";
 
   public post: Post;
@@ -101,7 +101,21 @@ export class PostPage {
       return;
     }
     for (let i=0; i<this.iframes.length; i++){
+      console.log(this.iframes[i]);
       let link = this.iframes[i].match(/src="(\S+?)"/)[1]; //captured element is at index 1
+      //link = link.replace(/width: \d+(?:%|px);\s+height: \d+(?:%|px);/g, "width: 100%; height: 100%;");
+      if(link.match(/youtube/)){
+        link = link +"?playsinline=1";
+      }
+      if(link.match(/soundcloud/)){
+        link = link.replace(/auto_play=false/g, "auto_play=true");
+        link = link.replace(/hide_related=false/g, "hide_related=true");
+        link = link.replace(/show_comments=true/g, "show_comments=false");
+        link = link.replace(/download=true/g, "download=false");
+        link = link + "&amp;download=false";
+        link = link.replace(/visual=false/g, "visual=true");
+        link = link + "&amp;visual=true";
+      }
       console.log(link);
       let site = this.iframes[i].match(/src=".+\.(\S+?)\.com.+"/)[1];
       site = site.charAt(0).toUpperCase() + site.slice(1);
@@ -116,7 +130,7 @@ export class PostPage {
     }
   }
 
-  disableSoundCloudButtons(){ // add parameters to soundcloud widget to hide buttons buy/share/like/download
+  /*disableSoundCloudButtons(){ // add parameters to soundcloud widget to hide buttons buy/share/like/download
     //console.log("cleaning soundcloud widget");
     this.rawContent = this.rawContent.replace(/(auto_play=(?:false|true))/g, "$1"+"&amp;liking=false&amp;buying=false&amp;sharing=false&amp;download=false");
     //console.log("after: " + this.rawContent);
@@ -135,7 +149,7 @@ export class PostPage {
   disableLiveMixTapes(){
     this.rawContent = this.rawContent.replace(/width="\d+"\s+height="\d+"/g, "");
     this.rawContent = this.rawContent.replace( /scrolling="no"/g, 'scrolling="no" sharing="no"' ); //livemixtapes
-  }
+  }*/
 
   linksToInAppBrowser(){
     //console.log("before: " + this.rawContent); // grab links and transform then into Angular 2 click event for InAppBrowser processing
