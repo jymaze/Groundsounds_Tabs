@@ -101,7 +101,7 @@ export class PostPage {
       return;
     }
     for (let i=0; i<this.iframes.length; i++){
-      //console.log(this.iframes[i]);
+      console.log(this.iframes[i]);
       let link = this.iframes[i].match(/src="(\S+?)"/)[1]; //captured element is at index 1
       //link = link.replace(/width: \d+(?:%|px);\s+height: \d+(?:%|px);/g, "width: 100%; height: 100%;");
       if(link.match(/youtube/)){
@@ -109,11 +109,12 @@ export class PostPage {
         link = link +"?playsinline=1";
       }
       if(link.match(/soundcloud/)){
-        link = link.replace(/auto_play=false/g, "auto_play=true");
         link = link.replace(/hide_related=false/g, "hide_related=true");
         link = link.replace(/show_comments=true/g, "show_comments=false");
         link = link.replace(/show_teaser=true/g, "show_teaser=false");
         link = link + "&amp;show_teaser=false";
+        link = link.replace(/show_artwork=false/g, "show_artwork=true");
+        link = link + "&amp;show_artwork=true";
         link = link.replace(/download=true/g, "download=false");
         link = link + "&amp;download=false";
         link = link.replace(/visual=false/g, "visual=true");
@@ -123,7 +124,9 @@ export class PostPage {
         link = link.replace(/buying=true/g, "buying=false");
         link = link + "&amp;buying=false";
         link = link.replace(/sharing=false/g, "sharing=true");
-        link = link + "&amp;sharing=true";        
+        link = link + "&amp;sharing=true";
+        link = link.replace(/auto_play=false/g, "auto_play=true");
+        link = link + "&amp;auto_play=true";
       }
       console.log(link);
       let site = this.iframes[i].match(/src=".+\.(\S+?)\.com.+"/)[1];

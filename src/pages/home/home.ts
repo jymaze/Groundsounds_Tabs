@@ -115,7 +115,18 @@ export class HomePage {
   refreshPosts(refresher){
     this.currentPage = 1;
     //console.log('getting page ' + this.page)
-    this.wp.getPosts(this.currentPage, this.perPage, "").subscribe(data => { this.posts = this.jsonToObjects(data);
+    this.wp.getPosts(this.currentPage, this.perPage, "").subscribe(data => { 
+                                                    this.totalPages = data[0], //number of pages
+                                                    this.busyList = false;
+                                                    var posts = data[1];
+                                                    //console.log(posts.length);
+                                                    //console.log(posts);
+                                                    if (posts.length == 0){
+                                                      this.noResultsAlert();
+                                                    };
+                                                    //console.log(posts[0].title.rendered);
+                                                    //console.log("post length = "+posts.length);
+                                                    this.posts = this.jsonToObjects(posts); //data itself
                                                     this.getPicLinksByRegex(); 
                                                   },
                                            err => {refresher.complete(); this.noConnectionAlert()},

@@ -6,21 +6,28 @@
       </button>
     </ion-buttons>-->
     <ion-title>
-      <img class = "logo" src="assets/img/GS-logo.png">
+      <img class = "logo" src="assets/img/GS-logo-trim.png">
     </ion-title>
   </ion-navbar>
+
+  <ion-searchbar placeholder="Search Groundsounds"
+  autocomplete="on" animated=false 
+  showCancelButton=false debounce=60000
+  (search)="searchPosts($event)">
+  </ion-searchbar>
 
 </ion-header>
 
 <ion-content>
 
-  <ion-searchbar placeholder="Search Groundsounds"
+  <!--<ion-searchbar placeholder="Search Groundsounds"
     autocomplete="on" animated=false 
     showCancelButton=false debounce=60000
     (search)="searchPosts($event)">
-  </ion-searchbar>
+  </ion-searchbar>-->
 
-  <ion-refresher *ngIf="!busyList" [pullMin]="96" [pullMax]="200" (ionRefresh)="refreshPosts($event)">
+  
+  <ion-refresher *ngIf="enableRefresher()" [pullMin]="96" [pullMax]="200" (ionRefresh)="refreshPosts($event)">
     <ion-refresher-content
       pullingText = "Pull to refresh"
       pulling Icon = "arrow-dropdown"
@@ -59,6 +66,7 @@
     </ion-item>
 
   </ion-list>
+
     <!--<ion-row no-padding>
       <ion-col>
         <button ion-button clear small color="danger" icon-start>
