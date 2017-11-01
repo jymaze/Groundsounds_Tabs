@@ -1,49 +1,84 @@
 <ion-header>
   <ion-navbar>
+    <!--<ion-buttons start>
+      <button ion-button icon-only (click)="backToTop()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>-->
     <ion-title>
       <img class = "logo" src="assets/img/GS-logo.png">
     </ion-title>
   </ion-navbar>
+
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
+  <ion-searchbar placeholder="Search Groundsounds"
+    autocomplete="on" animated=false 
+    showCancelButton=false debounce=60000
+    (search)="searchPosts($event)">
+  </ion-searchbar>
 
-  <!--<ion-card>
+  <ion-refresher *ngIf="!busyList" [pullMin]="96" [pullMax]="200" (ionRefresh)="refreshPosts($event)">
+    <ion-refresher-content
+      pullingText = "Pull to refresh"
+      pulling Icon = "arrow-dropdown"
+      refreshingSpinner = "ios"
+      refreshingText = "Refreshing content...">
+    </ion-refresher-content>
+  </ion-refresher>
 
-    <ion-card-content>-->
+  <div *ngIf="busyList" class="spinner-container">
+      <ion-spinner></ion-spinner>
+      <p class="spinner-text">Loading content...</p>
+  </div>
 
-      <div class="title-container">
-        <h1 [innerHTML]= "gsTitle"></h1>
-      </div>
+  <ion-list>
 
-      <hr>
+    <ion-item *ngFor="let post of posts">
+      <ion-thumbnail item-start class="custom-thumbnail">
+        <div class="crop-div">
+          <img src={{post.picture}} class="customized-image">
+        </div>
+      </ion-thumbnail>
+      <p text-wrap class="post-title-text" [innerHTML]="post.title"></p>
+      <!--<p text-nowrap [innerHTML]="post.excerpt.rendered"></p>-->
+      <button ion-button tappable clear item-end class="forward-button" (click)="itemTapped(post)">
+        <ion-icon name="arrow-dropright-circle"></ion-icon>
+      </button>
+    </ion-item>
 
-      <div [innerHTML]="gsUrl"></div>
+    <ion-item class="load-more-item" *ngIf="posts.length==perPage && !busyList"> 
+        <p class="load-more-text">Load more posts</p>
+        <div class="load-more-div">
+          <button ion-button clear class="load-more-button" (click)="getNextPosts()">
+            <ion-icon name="arrow-dropdown-circle"></ion-icon>
+          </button>
+        </div>
+    </ion-item>
 
-    <!--</ion-card-content>-->
-
-    <ion-row class="fav-share" no-padding>
+  </ion-list>
+    <!--<ion-row no-padding>
       <ion-col>
-        <button ion-button clear small color="primary" icon-start>
+        <button ion-button clear small color="danger" icon-start>
           <ion-icon name='star'></ion-icon>
           Favorite
         </button>
       </ion-col>
-      <!--<ion-col text-center>
+      <ion-col text-center>
         <button ion-button clear small color="danger" icon-start>
           <ion-icon name='musical-notes'></ion-icon>
           Listen
         </button>
-      </ion-col>-->
+      </ion-col>
       <ion-col text-right>
-        <button ion-button clear small color="primary" icon-start>
+        <button ion-button clear small color="danger" icon-start>
           <ion-icon name='share-alt'></ion-icon>
           Share
         </button>
       </ion-col>
     </ion-row>
-
-  <!--</ion-card>-->
+  </ion-card>-->
 
 </ion-content>

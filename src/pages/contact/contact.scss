@@ -1,3 +1,19 @@
 page-contact {
+    
+    ion-header{
+        .toolbar-title{
+            height: 44px;
+            //width: 181px !important;
+            //max-width: 181px !important;
+        }
+
+        .logo{
+            height: 30px !important;
+            width: 140px !important;
+            //max-width: 181px !important;
+            margin: 7px 0px 7px 0px !important;
+        }
+
+    }
 
 }

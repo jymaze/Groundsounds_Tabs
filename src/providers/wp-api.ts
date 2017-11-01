@@ -23,7 +23,7 @@ export class WpApiService {
   //public rawPosts: any;
 
   constructor(public http: Http, private sanitizer: DomSanitizer) {
-    console.log('Hello WpApiService Provider');
+    //console.log('Hello WpApiService Provider');
   }
 
   /*getRawPosts(){
@@ -45,15 +45,18 @@ export class WpApiService {
     });
   }*/
 
-  getPosts(page: number, perPage: number){
+  getPosts(page: number, perPage: number, searchTerm: string){
 
     //this.posts = null;
 
-    let target = this.url + "posts?page=" + String(page) + "&per_page="+
-             String(perPage) +"&" + String(Date.now()); // url with page number and ajax timestamp to avoid caching
+    let target = this.url + "posts?" + "page=" + String(page) + "&per_page="+
+             String(perPage) +"&" + String(Date.now()) + "&search=" + searchTerm; // url with page number and ajax timestamp to avoid caching
     
     let postsJSON = this.http.get( target ).retry(5)
-                         .map(res => res.json()); // return observable cast to array of objects
+                         .map(response => {
+                          let nPages = parseInt(response.headers.toJSON()["x-wp-totalpages"]);
+                          return [nPages, response.json()];
+                        }); // return observable cast to array of objects
     return postsJSON;
 
   }

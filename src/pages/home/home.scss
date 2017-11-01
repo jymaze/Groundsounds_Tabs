@@ -3,13 +3,15 @@ page-home {
     ion-header{
         .toolbar-title{
             height: 44px;
-            width: 100%;
+            //width: 181px !important;
+            //max-width: 181px !important;
         }
 
         .logo{
-            height: 38px !important;
-            width: 181px !important;
-            margin: 3px 0px 3px 0px !important;
+            height: 30px !important;
+            width: 140px !important;
+            //max-width: 181px !important;
+            margin: 7px 0px 7px 0px !important;
         }
 
     }

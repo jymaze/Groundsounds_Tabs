@@ -50,7 +50,7 @@
       </button>
     </ion-item>
 
-    <ion-item class="load-more-item" *ngIf="posts.length==perPage && !busyList"> 
+    <ion-item class="load-more-item" *ngIf="canLoadMore()"> 
         <p class="load-more-text">Load more posts</p>
         <div class="load-more-div">
           <button ion-button clear class="load-more-button" (click)="getNextPosts()">

@@ -21,7 +21,8 @@ export class HomePage {
 
   public busyList: boolean = false;
   public posts: any = [];
-  public page: number = 1;
+  public currentPage: number = 1;
+  public totalPages: number = 0;
 
   public perPage: number = 20; // Important!
 
@@ -43,7 +44,7 @@ export class HomePage {
       //console.log(i);
       let item = posts[i];
       //console.log("item looked at");
-      //console.log(item);
+      console.log(item);
       ret.push( new Post(item.id, item.date, item.link, item.title.rendered, 
                             item.content.rendered, item.featured_media, item.author) );
     };
@@ -55,12 +56,22 @@ export class HomePage {
   getPosts(){
     this.busyList = true;
     //console.log('getting page ' + this.page)
-    this.wp.getPosts(this.page, this.perPage).subscribe( data => { this.busyList = false;
-                                                     this.posts = this.jsonToObjects(data); 
+    this.wp.getPosts(this.currentPage, this.perPage, "").subscribe( (data) => {
+                                                     this.totalPages = data[0], //number of pages
+                                                     this.busyList = false;
+                                                     var posts = data[1];
+                                                     //console.log(posts.length);
+                                                     //console.log(posts);
+                                                     if (posts.length == 0){
+                                                       this.noResultsAlert();
+                                                     };
+                                                     //console.log(posts[0].title.rendered);
+                                                     //console.log("post length = "+posts.length);
+                                                     this.posts = this.jsonToObjects(posts); //data itself
                                                      this.content.scrollToTop();
                                                      this.getPicLinksByRegex();
                                                    },
-                                           err => {this.busyList = false; this.showAlert()},
+                                           err => {this.busyList = false; this.noConnectionAlert()},
                                            /*() => console.log('getPosts completed')*/ );
   }
 
@@ -97,17 +108,17 @@ export class HomePage {
 
   getNextPosts(){
     this.content.scrollToTop();
-    this.page += 1;
+    this.currentPage += 1;
     this.getPosts();
   }
 
   refreshPosts(refresher){
-    this.page = 1;
+    this.currentPage = 1;
     //console.log('getting page ' + this.page)
-    this.wp.getPosts(this.page, this.perPage).subscribe(data => { this.posts = this.jsonToObjects(data);
+    this.wp.getPosts(this.currentPage, this.perPage, "").subscribe(data => { this.posts = this.jsonToObjects(data);
                                                     this.getPicLinksByRegex(); 
                                                   },
-                                           err => {refresher.complete(); this.showAlert()},
+                                           err => {refresher.complete(); this.noConnectionAlert()},
                                            () => {/*console.log('refreshPosts completed');*/ refresher.complete();}
                                 );
   }
@@ -131,13 +142,26 @@ export class HomePage {
     */
   }
 
-  showAlert() {
+  noConnectionAlert() {
   let alert = this.alertCtrl.create({
     title: 'Something went wrong...',
     subTitle: 'Data could not be loaded. Please check your network connection',
     buttons: ['OK']
   });
   alert.present();
+  }
+
+  noResultsAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'No results for this search...',
+      subTitle: 'The term you entered did not bring up any results.',
+      buttons: ['OK']
+    });
+    alert.present();
+    }
+
+  canLoadMore() {
+    return (this.currentPage<this.totalPages && !this.busyList);
   }
 
 }

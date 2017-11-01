@@ -29,7 +29,7 @@ export class PostPage {
   name: string;
   avatar: string;
 
-  iabOptions: string = "'location=no,toolbarposition=top,closebuttoncaption=< Back to App,suppressesIncrementalRendering=no,allowInlineMediaPlayback=yes,presentationstyle=fullscreen'";
+  iabOptions: string = "'location=no,toolbarposition=bottom,closebuttoncaption=Back to App,suppressesIncrementalRendering=no,disallowoverscroll=yes,allowInlineMediaPlayback=yes'";
   winOpenOptions: string = "'location=no'";
 
   public post: Post;
@@ -86,35 +86,44 @@ export class PostPage {
 
   getIframes(){
     this.iframes = this.rawContent.match(/<\s?iframe(?:(?!youtube).)+\/iframe\s?>/g);
-    console.log(this.iframes);
+    //console.log(this.iframes);
     let test_link = this.iframes[0].match(/"(http.+?)"/)[0];
     //this.presentModal();
     //this.iab.create(test_link);
     //window.open(test_link);
-    console.log(test_link);
+    //console.log(test_link);
   }
 
   replaceIframes(){
     this.iframes = this.rawContent.match(/<\s?iframe.+\/iframe\s?>/g);
-    console.log(this.iframes);
+    //console.log(this.iframes);
     if(!this.iframes){ //return if this.iframes is null
       return;
     }
     for (let i=0; i<this.iframes.length; i++){
-      console.log(this.iframes[i]);
+      //console.log(this.iframes[i]);
       let link = this.iframes[i].match(/src="(\S+?)"/)[1]; //captured element is at index 1
       //link = link.replace(/width: \d+(?:%|px);\s+height: \d+(?:%|px);/g, "width: 100%; height: 100%;");
       if(link.match(/youtube/)){
+        //link = link +"?playsinline=1&showinfo=0";
         link = link +"?playsinline=1";
       }
       if(link.match(/soundcloud/)){
         link = link.replace(/auto_play=false/g, "auto_play=true");
         link = link.replace(/hide_related=false/g, "hide_related=true");
         link = link.replace(/show_comments=true/g, "show_comments=false");
+        link = link.replace(/show_teaser=true/g, "show_teaser=false");
+        link = link + "&amp;show_teaser=false";
         link = link.replace(/download=true/g, "download=false");
         link = link + "&amp;download=false";
         link = link.replace(/visual=false/g, "visual=true");
         link = link + "&amp;visual=true";
+        link = link.replace(/liking=true/g, "liking=false");
+        link = link + "&amp;liking=false";
+        link = link.replace(/buying=true/g, "buying=false");
+        link = link + "&amp;buying=false";
+        link = link.replace(/sharing=false/g, "sharing=true");
+        link = link + "&amp;sharing=true";        
       }
       console.log(link);
       let site = this.iframes[i].match(/src=".+\.(\S+?)\.com.+"/)[1];

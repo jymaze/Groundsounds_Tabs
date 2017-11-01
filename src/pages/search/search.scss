@@ -1,73 +1,122 @@
 page-search {
+    
+    ion-header{
+        .toolbar-title{
+            height: 44px;
+            //width: 181px !important;
+            //max-width: 181px !important;
+        }
 
-    .toolbar-title{
-        height: 44px;
-        width: 100%;
-    }
+        .logo{
+            height: 30px !important;
+            width: 140px !important;
+            //max-width: 181px !important;
+            margin: 7px 0px 7px 0px !important;
+        }
 
-    .logo{
-        height: 38px !important;
-        width: 181px !important;
-        margin: 3px 0px 3px 0px !important;
-    }
-
-    .title-container{
-        padding: 25px 0px 25px 0px !important;
-        border-bottom-width: 3px !important;
-        border-top-width: 3px !important;
-        border-color: color($colors, primary) !important;
-        text-align: center !important;
-        color: color($colors, dark) !important;
-        font-weight: bold !important;
-    }
-
-    hr{
-        height: 1px;
-        border-bottom-width: 1px !important;
-        border-bottom-color: red;
-        color: transparent;
-    }
-
-    a{
-        color: teal !important;
-    }
-
-    p{
-        text-align: justify !important;
-        font-size: 16px;
-        line-height: 1.3em;
-        color: color($colors, dark) !important;
     }
 
     ion-content{
-        img{
-       padding: 30px 0px 30px 0px !important;
-       width: 100% !important;
-       height: auto !important; 
+
+        .searchbar-input{
+            border-style: solid;
+            border-width: 1px;
+            border-color: color($colors, lighttone);
         }
-    }
 
-    iframe{
-       padding: 30px 0px 25px 0px !important;
-       width: 100% !important;
-       height: auto !important; 
-    }
+        .spinner-container { // total height is height + 2 * margin = 96px, same as pullMin of ionRefresher
+            height: 92px;
+            width: 100%;
+            text-align: center;
+            margin: 2px;
+            padding: 0px;
+            border-bottom-color: color($colors, primary);
+        }
 
-    button{
-        font-size: 16px !important;
-    }
+        .spinner-text{
+            margin: 0px;
+            padding: 2px;
+            font-size: 16px;
+        }
 
-    .relatedthumb{
-        margin-left: auto !important;
-        margin-right: auto !important;
-        float: none !important;
-    }
+        /*.scroll-content .ion-list{
+            border-top-color: color($colors, primary) !important;
+        }*/
 
-    .yuzo__title{
-        text-align: center;
-    }
+        .item-inner{ // container for text content of item, only bottom border is used
+            border-bottom-color: color($colors, primary) !important;
+            border-bottom-width: 1px !important;
+        }
 
-    .yuzo_related_post{
-        display: none !important;
+        .custom-thumbnail{
+            height: 92px;
+            width: 92px
+        }
+
+        .crop-div{ // will crop contained img
+            position: absolute;
+            height: 92px;
+            width: 92px;
+            overflow: hidden;
+            border-style: solid !important;
+            border-width: 1px !important;
+            border-color: color($colors, lighttone);
+        }
+
+        .customized-image{ //styled for keeping aspect ratio and get a centered img in the div
+            position: absolute; //positioned in reference to crop-div
+            left: 50%; // align left edge in middle of container;
+            -webkit-transform: translate(-50%, 0%); // translate left by 50% of the img width and height
+            -ms-transform: translate(-50%, 0%);
+            transform: translate(-50%, 0%);
+            height: 100% !important; // scale to fill crop-div height
+            width: auto !important; // keep original height-width ratio, no deformation, expected landscape format of image
+            max-width: 1000% !important; // uncap max width set by default by ionic 2
+            margin: auto; // may be not needed
+            overflow: hidden;
+        }
+
+        .post-title-text{
+            //text-align: justify;
+            font-size: 16px;
+            line-height: 1.3em;
+            color: color($colors, dark);
+        }
+
+        .forward-button{
+            height: 56px !important;
+            width: 32px !important;
+            font-size: 26px !important;
+            color: color($colors, primary);
+        }
+
+        .load-more-item{
+            border-bottom-width: 0px !important;
+        }
+
+        .load-more-text{
+            text-align: center;
+            font-size: 16px;
+            color: color($colors, dark);
+        }
+
+        .load-more-div{
+            text-align: center;
+        }
+
+        .load-more-button{
+            height: 38px !important;
+            width: 72px !important;
+            text-align: center;
+            font-size: 32px !important;
+            margin: auto !important;
+            color: color($colors, primary);
+        }
+
+        .input-wrapper{ // is the div around the list item text
+            padding: 10px 0px !important;
+        }
+        
+        
     }
-}
+}   
